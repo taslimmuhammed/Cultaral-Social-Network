@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import HomePage from './Pages/HomePage';
 import LandingPage from './Pages/LandingPage';
 import GeneralPage from './Pages/GeneralPage';
-import Premium from './Comonents/Premium/Premium';
 import PremiumPage from './Pages/PremiumPage';
 import Admin from './Comonents/Admin/Admin';
 import Modal from 'react-modal'
@@ -55,10 +54,6 @@ useEffect(() => {
 
   return (
     <div className="main-screen">
-     {/* <div className='flex justify-between x1' >
-      <div className='' onClick={()=>{alert("Hang tight, global ranking will be available soon, Buy More units to get exciting rewards")}}><img src={trophy} className="trophy"></img></div>
-     <div className='' onClick={openNotifications}><img src={Notify?"https://www.pngall.com/wp-content/uploads/11/Youtube-Bell-Icon-Notification-Yellow-Button-PNG.png":"https://icones.pro/wp-content/uploads/2022/02/icone-de-cloche-grise.png"} className="bell"/></div>
-     </div> */}
       <Router>
         <Ethers>
         <Routes>
@@ -70,7 +65,6 @@ useEffect(() => {
         </Routes>
         </Ethers>
       </Router>
-      {/* <div className='l_Bottom margin'>&#169;Global Community Union</div>   */}
       <Modal
   isOpen={isOpen1}
   onRequestClose={CloseModal}
@@ -124,7 +118,6 @@ useEffect(() => {
         )
       })
     }
-
   <button onClick={CloseModal} className="md_3">Close X</button>
   </div>
   
