@@ -1,0 +1,253 @@
+.p_main{
+    width: 400px;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 130px;
+
+}
+
+.p_head{
+    font-family: 'Arial', sans-serif;
+    color: white;
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
+}
+.Wallet{
+  background-color: rgba(0, 102, 255, 0.518);
+  width: 400px;
+  height: 70px;
+  text-align: center;
+  padding: 10px;
+}
+.wallet_head{
+ color: bisque;
+ font-weight: 600;
+ font-family: 'Arial', sans-serif;
+ margin-bottom: 5px;
+ font-size: 12px;
+}
+.wallet_address{
+color: aliceblue;
+font-size: 15px;
+}
+.p_bottom{
+    width: 400px;
+    margin-top: 20px;
+    background-image: linear-gradient( rgb(95, 95, 95),rgb(50, 50, 50));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.p_details{
+  display: flex;
+  width: 100%;
+  justify-content:space-evenly;
+}
+.sub_head{
+  color:  rgba(214,157,29,255);
+  font-size: 22px;
+}
+
+.sub_sub{
+ font-size: 20px;
+ color: white;
+ margin-bottom: 15px;
+ text-align: center;
+}
+.p_rec{
+   color:  rgb(10, 218, 201);
+   font-size: 24px;
+   font-weight: 700;
+}
+.p_cards{
+   display: flex;
+   width: 400px;
+   justify-content: space-around;
+   align-items: center;
+   font-family: 'Trebuchet MS', sans-serif;
+   margin-bottom: 10px;
+}
+.p_card{
+   width: 100px;
+   text-align: center;
+   background-color: rgba(213,213,213,255);
+   padding: 20px;
+}
+
+.p_card_head{
+  color: rgb(18, 159, 143);
+  font-size: 17px;
+
+}
+.p_card_sub{
+   color: white;
+}
+.reffer_card{
+    width: 400px;
+    text-align: start;
+}
+.reffer_btn{
+    background-color: rgb(7, 185, 168);
+    padding: 15px;
+    margin-top: 10px;
+    width: 150px;
+    border-radius: 10px;
+}
+
+
+
+
+
+/* CSS */
+.button-24 {
+  background: #FF4742;
+  border: 1px solid #FF4742;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 40px;
+  outline: 0;
+  padding: 12px 14px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.button-24:hover,
+.button-24:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #FF4742;
+}
+
+.button-24:active {
+  opacity: .5;
+}
+
+
+
+
+
+
+/* CSS */
+.button-9 {
+  appearance: button;
+  backface-visibility: hidden;
+  background-color: #405cf5;
+  border-radius: 6px;
+  border-width: 0;
+  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
+  font-size: 100%;
+  height: 44px;
+  line-height: 1.15;
+  margin: 12px 0 0;
+  outline: none;
+  overflow: hidden;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transform: translateZ(0);
+  transition: all .2s,box-shadow .08s ease-in;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+  
+}
+
+.button-9:disabled {
+  cursor: default;
+}
+
+.button-9:focus {
+  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
+}
+
+/* model */
+
+.mymodal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: rgb(0, 0, 0);
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+  width: 400px;
+  min-height: 200px;
+}
+
+.myoverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+.md_1{
+  font-size: larger;
+  color: #ccc;
+}
+.md_2{
+font-size: x-large;
+color: #ccc;
+}
+.md_5{
+  font-size:medium;
+  color: #ccc;
+  }
+.md_3{
+  background-color: #FF4742;
+  color: #ccc;
+  margin-top: 20px;
+  margin-left: 270px;
+  padding: 5px;
+}
+
+.in_2{
+  margin-left: 50px;
+  margin-top: 20px;
+  height: 30px;
+  width: 200px;
+  border-radius: 5px;
+}
+.button-x{
+  padding: 10px;
+  padding-left: 30px;
+  color: #ccc;
+  background-color: #405cf5;
+  width: 130px;
+  margin-left: 70px;
+  margin-top: 30px;
+ border-radius: 5px;
+}

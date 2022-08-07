@@ -1,0 +1,49 @@
+.landing_main{
+    width: 400px;
+    height: 70vh;
+    background-color: rgb(70, 69, 69);
+    border-radius: 2px;
+    padding: 30px;
+    
+}
+.l_welcome{
+  color: aquamarine;
+  font-size: 25px;
+  font-weight: 500;
+  font-family: 'Courier New', monospace;
+}
+.l_head{
+    color: aquamarine;
+    font-weight: 600;
+    font-size: 34px;
+    font-family: 'Courier New', monospace;
+}
+.l_Bottom{
+  
+     color: aquamarine;
+     font-weight: 400;
+    font-size: 20px;
+    font-family: 'Courier New', monospace;
+}
+.l_liner{
+  margin: 10px;
+  width: 100%;
+  height: 2px;
+  background-color: black;
+}
+.l_bottom{
+width: 100%;
+height: 200px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.connect_btn{
+  width: 175px;
+  height: 75px;
+  display: flex;
+justify-content: center;
+align-items: center;
+color: white;
+background-color: black;
+}
