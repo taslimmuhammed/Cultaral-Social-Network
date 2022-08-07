@@ -1,5 +1,123 @@
 //SPDX-License-Identifier: MIT
 
+
+pragma solidity ^0.8.0;
+
+library SafeMath {
+    function tryAdd(uint256 a, uint256 b)
+        internal
+        pure
+        returns (bool, uint256)
+    {
+        unchecked {
+            uint256 c = a + b;
+            if (c < a) return (false, 0);
+            return (true, c);
+        }
+    }
+
+    function trySub(uint256 a, uint256 b)
+        internal
+        pure
+        returns (bool, uint256)
+    {
+        unchecked {
+            if (b > a) return (false, 0);
+            return (true, a - b);
+        }
+    }
+
+    function tryMul(uint256 a, uint256 b)
+        internal
+        pure
+        returns (bool, uint256)
+    {
+        unchecked {
+            if (a == 0) return (true, 0);
+            uint256 c = a * b;
+            if (c / a != b) return (false, 0);
+            return (true, c);
+        }
+    }
+
+    function tryDiv(uint256 a, uint256 b)
+        internal
+        pure
+        returns (bool, uint256)
+    {
+        unchecked {
+            if (b == 0) return (false, 0);
+            return (true, a / b);
+        }
+    }
+
+    function tryMod(uint256 a, uint256 b)
+        internal
+        pure
+        returns (bool, uint256)
+    {
+        unchecked {
+            if (b == 0) return (false, 0);
+            return (true, a % b);
+        }
+    }
+
+    function add(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a + b;
+    }
+
+    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a - b;
+    }
+
+    function mul(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a * b;
+    }
+
+    function div(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a / b;
+    }
+
+    function mod(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a % b;
+    }
+
+    function sub(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
+        unchecked {
+            require(b <= a, errorMessage);
+            return a - b;
+        }
+    }
+
+    function div(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
+        unchecked {
+            require(b > 0, errorMessage);
+            return a / b;
+        }
+    }
+
+    function mod(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
+        unchecked {
+            require(b > 0, errorMessage);
+            return a % b;
+        }
+    }
+}
+
+
+
 pragma solidity ^0.8.0;
 
 contract GCU {
@@ -12,24 +130,24 @@ contract GCU {
     mapping(address => uint256) public referenceProfit;
     mapping(address => uint256) public benifit;
     mapping(address => uint256) public IN;
-    // mapping(uint256 =>address[]) public monthlyRewardList;
-    mapping(uint256 => mapping(address => uint256)) public monthlyReferals;
+    mapping(uint256=>mapping(address => uint256)) public monthlyReferals;
     struct ReferalStruct {
-        address userAddress;
+         address userAddress;
         uint256 referalCount;
     }
     address[] public userList;
     address[] queue;
     uint256 front;
     uint256 rear;
-    uint256 userLimit;
-    uint256 public monthCounter;
+    uint256 public userLimit;
+    //uint256 public monthCounter;
     uint256 public monthTimer;
     uint256 public unitLimit;
     uint256 public totalSupply;
     address public owner;
-    event WonUnit(address winner, uint256 amount);
-    event BuyTicket(address buyer, uint256 amount);
+    event Win(address winner);
+    event BoughtUnit(address buyer, uint256 amount);
+    event SignedIn(address newUser, address referrer);
     address payable reserve1 =
         payable(0xEDd1BA0359f50635143420c3E819E7a32bb62EDB);
     address payable reserve2 =
@@ -63,17 +181,14 @@ contract GCU {
         userLimit = 10;
         monthTimer = block.timestamp;
     }
-
+    
     modifier loggedIn() {
         require(active[msg.sender] != 0, "Sign In first");
         _;
     }
 
-    modifier checkOwnerShip() {
-        require(
-            msg.sender == owner || msg.sender == developer,
-            "Only owner can access"
-        );
+     modifier checkOwnerShip() {
+        require( msg.sender == owner || msg.sender == developer, "Only owner can access" );
         _;
     }
 
@@ -89,7 +204,7 @@ contract GCU {
         userLimit = newLimit;
     }
 
-    function changeLimit(uint256 _limit) public checkOwnerShip {
+    function changeLimit(uint256 _limit) public checkOwnerShip{
         unitLimit = _limit;
     }
 
@@ -110,26 +225,22 @@ contract GCU {
             else return false;
         }
     }
-
-    function currentMonth() public view returns (uint256) {
-        uint256 diff = (block.timestamp - monthTimer) / 60 / 60 / 24 / 30;
+    function currentMonth() public view returns(uint256){
+        uint256 diff = (block.timestamp - monthTimer) / 60 / 60 / 24 / 30 ;
         return diff;
     }
-
     function signIn(address _friend, bool _active) public returns (bool) {
         require(msg.sender != _friend);
         require(active[msg.sender] == 0, "Already signed in");
-        require(
-            ((active[_friend] == 2) ||
-                (_friend == 0x0000000000000000000000000000000000000000)),
-            "Invalid referal id"
-        );
+        require(  ((active[_friend] == 2) ||  (_friend == 0x0000000000000000000000000000000000000000)), "Invalid referal id" );
         require(referral[_friend] != msg.sender, "Cant referal each other");
+        require(((unitCount[_friend]>=1)||(_friend==0x0000000000000000000000000000000000000000)), "The referrer must buy atleast one unit to refer");
         userList.push(msg.sender);
         referral[msg.sender] = _friend;
         uint8 act = 1;
         if (_active) act = 2;
         active[msg.sender] = act;
+        emit SignedIn(msg.sender, _friend);
         uint256 i = 0;
         // Referal Part
         for (i = 0; i < 9; i++) {
@@ -144,13 +255,11 @@ contract GCU {
             if (i == 7) myRefferals[_friend].lvl8++;
             if (i == 8) myRefferals[_friend].lvl9++;
 
-            if (i > 1)
-                monthlyReferals[currentMonth()][_friend] = monthlyReferals[
-                    currentMonth()
-                ][_friend].add(1);
+            if(i>1) 
+            monthlyReferals[currentMonth()][_friend] =monthlyReferals[currentMonth()][_friend].add(1); 
             _friend = referral[_friend];
             //   uint256 k = 0;
-            // ReferalStruct memory temp = ReferalStruct(_friend, 1);
+           // ReferalStruct memory temp = ReferalStruct(_friend, 1);
 
             //Countinf till address matches
             // for (k = 0; k < monthlyRewardList[monthCounter].length; k++)
@@ -158,6 +267,7 @@ contract GCU {
             //         _friend ==
             //         monthlyRewardList[monthCounter][k]
             //      ) break;
+    
 
             // if (monthlyRewardList[monthCounter].length == k)
             //     monthlyRewardList[monthCounter].push(temp);
@@ -175,8 +285,10 @@ contract GCU {
             //         }
             //     }
             // }
+
         }
 
+ 
         return true;
     }
 
@@ -307,7 +419,7 @@ contract GCU {
             } else {
                 payable(queue[front]).transfer(12 ether);
             }
-            emit WonUnit(queue[front], 12);
+            emit Win(queue[front]);
             front = front.add(1);
         }
         rear = rear.add(1);
@@ -321,7 +433,7 @@ contract GCU {
         reserve5.transfer(.6 ether);
         Wallet.transfer(.5 ether);
     }
-
+    
     function enterGame() public loggedIn returns (bool) {
         require(unitBalance[msg.sender] >= 100, "Not enough UNIT left");
         bool _active = true;
@@ -336,7 +448,8 @@ contract GCU {
     }
 
     function buyUnitToken(uint256 _amount) public payable loggedIn {
-        require(msg.value >= _amount.mul(10), "please pay the right amount");
+        uint256 price = _amount.mul(10000000000000000000);
+        require(msg.value >= price , "please pay the right amount");
         bool _active = true;
         if (active[msg.sender] == 1) _active = false;
         require(checkUserLimit(_active, _amount), "Maximum user limit reached");
@@ -344,24 +457,24 @@ contract GCU {
         unitBalance[msg.sender] = unitBalance[msg.sender].add(_amount * 100);
         unitCount[msg.sender] = unitCount[msg.sender].add(_amount);
         totalSupply = totalSupply.add(_amount);
+        emit BoughtUnit(msg.sender, _amount);
     }
 
-    function getMonthStatus() public view returns (bool) {
-        uint256 diff = (block.timestamp - monthTimer) / 60 / 60 / 24;
-        if (diff >= 30) return true;
-        else return false;
-    }
+    // function getMonthStatus() public view returns (bool) {
+    //     uint256 diff = (block.timestamp - monthTimer) / 60 / 60 / 24;
+    //     if (diff >= 30) return true;
+    //     else return false;
+    // }
 
     function getDays() public view returns (uint256) {
         uint256 diff = (block.timestamp - monthTimer) / 60 / 60 / 24;
-        diff = diff % 30;
+        diff = diff%30;
         return diff;
     }
-
     //  function getDaysLeft() public view returns (uint) {
     //     uint diff = (block.timestamp - monthTimer) / 60 / 60 / 24;
-    //     if(30>diff && diff>0)
-    //     else return 0;
+    //     if(30>diff && diff>0) 
+    //     else return 0;  
     // }
     // function updateMonth() public checkOwnerShip{
     //     // require(
@@ -373,39 +486,29 @@ contract GCU {
     //     monthTimer = block.timestamp;
     // }
 
-    function getReferalList(uint256 _month)
-        public
-        view
-        returns (ReferalStruct[] memory)
-    {
+    function getReferalList(uint256 _month) public view returns(ReferalStruct[] memory){
         uint256 i;
         uint256 z = userList.length;
-        ReferalStruct[] memory arr = new ReferalStruct[](z);
-        for (i = 0; i < userList.length; i++) {
-            address temp = userList[i];
+         ReferalStruct[] memory arr = new ReferalStruct[](z);
+        for(i=0;i<userList.length;i++){
+            address temp  =userList[i] ;
             uint256 tempNo = monthlyReferals[_month][temp];
-            arr[i] = ReferalStruct(temp, tempNo);
+            arr[i]=ReferalStruct(temp,tempNo);
         }
         return arr;
     }
-
-    function getCurrentMonthWinners()
-        public
-        view
-        returns (ReferalStruct[] memory)
-    {
+    function getCurrentMonthWinners() public view returns(ReferalStruct[] memory){
         uint256 _month = currentMonth();
         uint256 i;
         uint256 z = userList.length;
-        ReferalStruct[] memory arr = new ReferalStruct[](z);
-        for (i = 0; i < userList.length; i++) {
-            address temp = userList[i];
+         ReferalStruct[] memory arr = new ReferalStruct[](z);
+        for(i=0;i<userList.length;i++){
+            address temp  =userList[i] ;
             uint256 tempNo = monthlyReferals[_month][temp];
-            arr[i] = ReferalStruct(temp, tempNo);
+            arr[i]=ReferalStruct(temp,tempNo);
         }
         return arr;
     }
-
     // function getWinners(uint256 _month) public view returns (ReferalStruct[] memory) {
     //     ReferalStruct[] memory newList;
     //     // ReferalStruct memory temp;
@@ -428,15 +531,14 @@ contract GCU {
     //     return getWinners(monthCounter);
     // }
 
-    fallback() external {
+    fallback() external{
         revert("wrong transaction");
     }
 
-    function withDrawMoney() public checkOwnerShip {
+    function withDrawMoney() public checkOwnerShip{
         Wallet.transfer(address(this).balance);
     }
-
-    function checkContractBalance() public view returns (uint256) {
+    function checkContractBalance() public view returns(uint256){
         return address(this).balance;
     }
     //changes while production
@@ -446,120 +548,7 @@ contract GCU {
     //currentMonth = moth
 }
 
-pragma solidity ^0.8.0;
 
-library SafeMath {
-    function tryAdd(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
-        unchecked {
-            uint256 c = a + b;
-            if (c < a) return (false, 0);
-            return (true, c);
-        }
-    }
-
-    function trySub(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
-        unchecked {
-            if (b > a) return (false, 0);
-            return (true, a - b);
-        }
-    }
-
-    function tryMul(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
-        unchecked {
-            if (a == 0) return (true, 0);
-            uint256 c = a * b;
-            if (c / a != b) return (false, 0);
-            return (true, c);
-        }
-    }
-
-    function tryDiv(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
-        unchecked {
-            if (b == 0) return (false, 0);
-            return (true, a / b);
-        }
-    }
-
-    function tryMod(uint256 a, uint256 b)
-        internal
-        pure
-        returns (bool, uint256)
-    {
-        unchecked {
-            if (b == 0) return (false, 0);
-            return (true, a % b);
-        }
-    }
-
-    function add(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a + b;
-    }
-
-    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a - b;
-    }
-
-    function mul(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a * b;
-    }
-
-    function div(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a / b;
-    }
-
-    function mod(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a % b;
-    }
-
-    function sub(
-        uint256 a,
-        uint256 b,
-        string memory errorMessage
-    ) internal pure returns (uint256) {
-        unchecked {
-            require(b <= a, errorMessage);
-            return a - b;
-        }
-    }
-
-    function div(
-        uint256 a,
-        uint256 b,
-        string memory errorMessage
-    ) internal pure returns (uint256) {
-        unchecked {
-            require(b > 0, errorMessage);
-            return a / b;
-        }
-    }
-
-    function mod(
-        uint256 a,
-        uint256 b,
-        string memory errorMessage
-    ) internal pure returns (uint256) {
-        unchecked {
-            require(b > 0, errorMessage);
-            return a % b;
-        }
-    }
-}
 
 // pragma solidity ^0.8.0;
 
