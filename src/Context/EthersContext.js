@@ -9,7 +9,7 @@ export const EthersContext = createContext(null);
 const {ethereum} = window
 export default function Ethers({children}){
    const navigate = useNavigate()
-  const contractAddress = "0x9E1f9732258431eA82102EaD97FE0dC419837E8e"
+  const contractAddress = "0xD75060f8Dcf13E94bA419B30D64B70869f42Ac8a"
   const provider = new ethers.providers.Web3Provider(ethereum)
   const signer = provider.getSigner()
   const contract = new ethers.Contract(contractAddress, abi,signer)
@@ -68,6 +68,7 @@ export default function Ethers({children}){
           const transfer = await contract.signIn(address, active)
           await transfer.wait()
           alert("Sign In succeful, if your are not redirected , refresh after few minutes")
+          navigate('/premium')
         }catch(e){
            // alert(e.data.message)
             console.log(e)

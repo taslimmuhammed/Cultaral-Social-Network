@@ -23,7 +23,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(rgb(0, 0, 0), rgb(75, 75, 73));
 }
 .gradient-bg-welcome {
   background-color:#0f0e13;

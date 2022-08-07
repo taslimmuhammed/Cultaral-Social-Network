@@ -32,6 +32,14 @@ function Home() {
         isLoading?  <Loader/>:
         <div> 
         <div className='h_box'>
+
+
+          <div className='h_head flex justify-between'>
+         <div>CSN</div>
+         <div></div>
+          </div>
+
+
           <div className='h3'>Please enter your Refferal ID [*optional]</div>
           <input className='h_btn bg-transparent px-1'
            placeholder='referal Id' 

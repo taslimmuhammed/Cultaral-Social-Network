@@ -55,12 +55,10 @@ useEffect(() => {
 
   return (
     <div className="main-screen">
-     <div className='l_head'>Global Community Union</div>
-     <div className='flex justify-between x1' >
+     {/* <div className='flex justify-between x1' >
       <div className='' onClick={()=>{alert("Hang tight, global ranking will be available soon, Buy More units to get exciting rewards")}}><img src={trophy} className="trophy"></img></div>
-     {/* <div className='' onClick={openNotifications}><img src={Notify?"https://www.pngall.com/wp-content/uploads/11/Youtube-Bell-Icon-Notification-Yellow-Button-PNG.png":"https://icones.pro/wp-content/uploads/2022/02/icone-de-cloche-grise.png"} className="bell"/></div> */}
-     </div>
-      <div className='l_liner'></div>
+     <div className='' onClick={openNotifications}><img src={Notify?"https://www.pngall.com/wp-content/uploads/11/Youtube-Bell-Icon-Notification-Yellow-Button-PNG.png":"https://icones.pro/wp-content/uploads/2022/02/icone-de-cloche-grise.png"} className="bell"/></div>
+     </div> */}
       <Router>
         <Ethers>
         <Routes>
@@ -72,7 +70,7 @@ useEffect(() => {
         </Routes>
         </Ethers>
       </Router>
-      <div className='l_Bottom margin'>&#169;Global Community Union</div>  
+      {/* <div className='l_Bottom margin'>&#169;Global Community Union</div>   */}
       <Modal
   isOpen={isOpen1}
   onRequestClose={CloseModal}
