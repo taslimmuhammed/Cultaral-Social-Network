@@ -9,7 +9,7 @@ export const EthersContext = createContext(null);
 const {ethereum} = window
 export default function Ethers({children}){
    const navigate = useNavigate()
-  const contractAddress = "0xD75060f8Dcf13E94bA419B30D64B70869f42Ac8a"
+  const contractAddress = "0x864235a2CD478FBe53C8d8bBb3aeABcA45bB8801"
   const provider = new ethers.providers.Web3Provider(ethereum)
   const signer = provider.getSigner()
   const contract = new ethers.Contract(contractAddress, abi,signer)
