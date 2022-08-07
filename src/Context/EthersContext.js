@@ -4,11 +4,11 @@ import { abi } from "../Utils/abi";
 import { English } from "../Comonents/Languages/English";
 import { Chinese } from "../Comonents/Languages/Chinese";
 import { Sorter } from "./Sorter";
+import { useNavigate } from "react-router-dom";
 export const EthersContext = createContext(null);
 const {ethereum} = window
 export default function Ethers({children}){
-  const [Lang, setLang] = useState(true)
-  // const [Language, setLanguage] = useState(English)
+   const navigate = useNavigate()
   const contractAddress = "0x9E1f9732258431eA82102EaD97FE0dC419837E8e"
   const provider = new ethers.providers.Web3Provider(ethereum)
   const signer = provider.getSigner()
@@ -36,6 +36,7 @@ export default function Ethers({children}){
         if (!ethereum) return alert("Please install MetaMask.");
         const accounts = await ethereum.request({ method: "eth_requestAccounts", });
         setCurrentAccount(accounts[0]);
+        await getN()
         window.location.reload();
       } catch (error) {
         console.log(error);
