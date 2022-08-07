@@ -14,7 +14,6 @@ import trophy from './images/trophy.png'
 import { Messages } from './Utils/Messages';
 import { English } from './Comonents/Languages/English';
 function App() {
-  const {Lang, setLang} = useContext(EthersContext)
   const [Notify, setNotify] = useState(true)
   const [isOpen1, setIsOpen1] = useState(false);
   const [Read, setRead] = useState([])
