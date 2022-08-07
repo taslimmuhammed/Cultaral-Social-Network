@@ -9,7 +9,7 @@ const {ethereum} = window
 export default function Ethers({children}){
   const [Lang, setLang] = useState(true)
   // const [Language, setLanguage] = useState(English)
-  const contractAddress = "0x8DFE660bAbf23af5d93Bf392A69e7f6FF694c0f8"
+  const contractAddress = "0x9E1f9732258431eA82102EaD97FE0dC419837E8e"
   const provider = new ethers.providers.Web3Provider(ethereum)
   const signer = provider.getSigner()
   const contract = new ethers.Contract(contractAddress, abi,signer)
@@ -306,7 +306,7 @@ export default function Ethers({children}){
     useEffect(() => {
       checkIfWalletIsConnect();
       // changeNetwork()
-      //getN()
+      getN()
     }, []);
 
     // useEffect(() => {
