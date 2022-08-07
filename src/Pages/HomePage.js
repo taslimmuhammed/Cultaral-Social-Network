@@ -11,10 +11,10 @@ function HomePage() {
           if(s1===0){
       navigate("/landing")
      }else{
-      // const s2 =await checkSignIn()
-      // console.log(s2)
-      // if(s2===1) navigate('/general')
-      // if(s2===2) navigate('/premium')
+      const s2 =await checkSignIn()
+      console.log(s2)
+      if(s2===1) navigate('/general')
+      if(s2===2) navigate('/premium')
      }
   }
 
