@@ -5,7 +5,7 @@ import { EthersContext } from '../Context/EthersContext'
 
 function HomePage() {
   const navigate = useNavigate()
-  const {currentAccount, checkIfWalletIsConnect} = useContext(EthersContext)
+  const {currentAccount, checkIfWalletIsConnect, checkSignIn} = useContext(EthersContext)
   const checker = async() => {
      const  s1 = await checkIfWalletIsConnect()
           if(s1===0){
