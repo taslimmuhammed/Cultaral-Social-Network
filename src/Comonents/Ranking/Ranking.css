@@ -1,0 +1,55 @@
+.title2{
+    font-size: 30px;
+    margin-top: 5px;
+}
+td{
+    border: 2x solid rgb(0, 0, 0);
+}
+table{
+    width: 100%;
+    height: 500px;
+}
+tr{
+    border: 2;
+}
+.r-table{
+    color: rgb(104, 106, 108);
+    width: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+}
+.ranks{
+width: 100px;
+height: 50px;
+border: 1px solid white;
+background-color: #96D4D4;
+padding-top: 10px;
+}
+.addresses{
+    width: 250px;
+    height: 50px;
+    font-size: 10px;
+    border: 1px solid white;
+    background-color: #96D4D4;
+    padding-top: 13px;
+}
+.h_box2{
+    background-color: rgb(221, 221, 221);
+     display: flex;
+     flex-direction: column;
+}
+.r-table-sub{
+    display: flex;
+}
+.bold{
+font-size: x-large;
+
+}
+.bold2{
+    font-size: x-large;
+    padding-top: -10px;
+} 
