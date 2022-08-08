@@ -34,19 +34,33 @@ function Home() {
         <div className='h_box'>
 
 
-          <div className='h_head flex justify-between'>
-         <div>CSN</div>
-         <div></div>
+          <div className='h_head flex justify-between items-center px-4'>
+         <div className='title1'>CSN</div>
+         <div>
+         <button className="button-82-pushable mb-2" role="button">
+      <span className="button-82-shadow"></span>
+  <span className="button-82-edge"></span>
+  <span className="button-82-front text">
+    Read Me
+  </span>
+</button>
+         </div>
+
           </div>
 
-
-          <div className='h3'>Please enter your Refferal ID [*optional]</div>
-          <input className='h_btn bg-transparent px-1'
-           placeholder='referal Id' 
+       <div className='w-full flex flex-column justify-center items-center'>
+        <div className='wel-box'>
+        Welcome to smart contract automated financial allocation dapp .
+        </div>
+          <div className='h51 mt-5'>Refferal ID [*optional]</div>
+          <input className='h_in1 bg-transparent px-1'
+           placeholder='0x0000000000000000000000000000000000000000' 
            onChange={(e)=>{
              setrefferalId(e.target.value)
            }}></input>
-          <div className='h_btn' onClick={handleSubmit}>Sign In</div>
+          <div className='signIn_btn' onClick={handleSubmit}>Log In</div>
+        </div>
+        
         </div>
       </div>
         

@@ -9,9 +9,9 @@ import GeneralPage from './Pages/GeneralPage';
 import PremiumPage from './Pages/PremiumPage';
 import Admin from './Comonents/Admin/Admin';
 import Modal from 'react-modal'
-import trophy from './images/trophy.png'
 import { Messages } from './Utils/Messages';
 import { English } from './Comonents/Languages/English';
+import Ranking from './Comonents/Ranking/Ranking';
 function App() {
   const [Notify, setNotify] = useState(true)
   const [isOpen1, setIsOpen1] = useState(false);
@@ -54,6 +54,10 @@ useEffect(() => {
 
   return (
     <div className="main-screen">
+     {/* <div className='flex justify-between x1' >
+      <div className='' onClick={()=>{alert("Hang tight, global ranking will be available soon, Buy More units to get exciting rewards")}}><img src={trophy} className="trophy"></img></div>
+     <div className='' onClick={openNotifications}><img src={Notify?"https://www.pngall.com/wp-content/uploads/11/Youtube-Bell-Icon-Notification-Yellow-Button-PNG.png":"https://icones.pro/wp-content/uploads/2022/02/icone-de-cloche-grise.png"} className="bell"/></div>
+     </div> */}
       <Router>
         <Ethers>
         <Routes>
@@ -62,9 +66,11 @@ useEffect(() => {
           <Route path='/premium' exact element={<PremiumPage/>}></Route>
           <Route path='/general' exact element={<GeneralPage/>}></Route>
           <Route path='/admin' exact element={<Admin/>}></Route>   
+          <Route path='/ranking' exact element={<Ranking/>}></Route>  
         </Routes>
         </Ethers>
       </Router>
+      {/* <div className='l_Bottom margin'>&#169;Global Community Union</div>   */}
       <Modal
   isOpen={isOpen1}
   onRequestClose={CloseModal}
@@ -118,6 +124,7 @@ useEffect(() => {
         )
       })
     }
+
   <button onClick={CloseModal} className="md_3">Close X</button>
   </div>
   

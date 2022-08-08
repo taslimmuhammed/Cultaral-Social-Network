@@ -4,6 +4,9 @@ import Loader from '../Loading/Loading'
 import { useNavigate } from 'react-router-dom'
 import {EthersContext} from '../../Context/EthersContext'
 import Modal from 'react-modal'
+import Copy from '../../images/copy.png'
+import cup from '../../images/cup.png'
+import bell from '../../images/bell.png'
 
 Modal.setAppElement("#root");
 function Premium() {
@@ -17,7 +20,9 @@ function Premium() {
     const [RFData, setRFData] = useState()
     const [In1, setIn1] = useState()
     const [Ben, setBen] = useState(0)
-    
+    const [CA, setCA] = useState()
+   const ShortenAddress = (address) => `${address.slice(0, 5)}...${address.slice(address.length - 4)}`;
+
  const [isOpen, setIsOpen] = useState(false);
  const [isOpen1, setIsOpen1] = useState(false);
     const initiaor= async()=>{
@@ -62,7 +67,7 @@ function Premium() {
           setIsOpen1(false)
        } catch(e){
        console.log(e)
-        // alert("Make sure you have 10 usdt in polygon blocchain, Note: if you have USDt in other blockchains please swap to polygon")
+        // alert("Make sure you have 10 Matic in polygon blocchain, Note: if you have Matic in other blockchains please swap to polygon")
         alert(e.data.message)
       }
       }
@@ -92,6 +97,9 @@ function Premium() {
       initiaor()
     }, [])
 
+useEffect(() => {
+  if(currentAccount) setCA(ShortenAddress(currentAccount))
+}, [currentAccount])
 
 
   function toggleModal() {
@@ -103,93 +111,92 @@ function Premium() {
     
   return isLoading? <Loader/>:
     <div className='p_main'>
-        <div className='p_head'>Premium Member</div>
-        <div className='Wallet'>
-            <div className='wallet_head'>WALLET ADDRESS</div>
-            <div className='wallet_address'>{currentAccount}</div>
-        </div>
+      {/* Nav Part */}
+      <div className='h_head flex justify-between items-center px-1'>
+         <div className='title1'>CSN</div>
+         <div className='p_id_main '>
+         <div className='p_id ml-1' >ID :{CA}</div>
+         <img className='copy-img' src={Copy} onClick={() => {navigator.clipboard.writeText(currentAccount)}}></img>
+      </div>
+      <img src={bell} className='w-9 h-9' />
+      <img src={cup}  className='w-9 h-8' onClick={()=>navigate('/ranking')}/>
+      </div>
+      {/* Nav Part End */}
+
 
         <div className='p_bottom'>
           <div className='p_details'>
               <div>
-              <div className='sub_head'>PURCHASE</div>
-            <div className='sub_sub'>{Bunit1}/90</div>
+              <div className='sub_head'>Ticket Order</div>
+            <div className='sub_sub'>{Bunit1}/10</div>
               </div>
             
              <div>
-             <div className='sub_head'>Available Balance</div>
+             <div className='sub_head'>Ticket Available</div>
             <div className='sub_sub'>{Bunit1+Ben/2-Units}</div>
              </div>
             
             </div>
             <div className='sub_head'>BENEFITS SHARING</div>
-            <div className='sub_sub'>{Ben}USDt | {Ben/2}Units</div>
+            <div className='sub_sub'>{Ben} Matic | {Ben/2}Units</div>
 
             <div className='sub_head'>REFERENCE PORFIT</div>
-            <div className='sub_sub'>{ReferalBalance} USDT</div>
+            <div className='sub_sub'>{ReferalBalance} Matic</div>
               
-            <div className='p_buttons' >
-            <button className="button-9" role="button" onClick={toggleModal1}>PURCHASE</button>
-            <button className="button-9" role="button" onClick={handleLot}>START</button>
+            <div className='flex w-full justify-evenly' >
+            <button className="button-9" role="button" onClick={toggleModal1}>ORDER</button>
+            <button className="button-9" role="button" onClick={handleLot}>ACTIVATE</button>
             </div>
-            <div className='p_rec'>Recommend Members</div>
 
             <div className='p_cards'>
                 <div className='p_card'>
+                  <div className='p_box px-3'>
                     <div className='p_card_head'>Level 1</div>
                     <div className='p_card_sub'>{RFData? RFData[0]: "xxx"}</div>
-
+                  </div>
+                  <div className='p_box px-3'>
                     <div className='p_card_head'>Level 2</div>
                     <div className='p_card_sub'>{RFData? RFData[1]: "xxx"}</div>
-
+                    </div>
+                  <div className='p_box px-3'>
                     <div className='p_card_head'>Level 3</div>
                     <div className='p_card_sub'>{RFData? RFData[2]: "xxx"}</div>
+                    </div>
                 </div>
 
                 <div className='p_card'>
+
+                  <div className='p_box px-3'>
                     <div className='p_card_head'>Level 4</div>
                     <div className='p_card_sub'>{RFData? RFData[3]: "xxx"}</div>
-
+                    </div>
+                  <div className='p_box px-3'>
                     <div className='p_card_head'>Level 5</div>
                     <div className='p_card_sub'>{RFData? RFData[4]: "xxx"}</div>
-
+                    </div>
+                  <div className='p_box px-3'>
                     <div className='p_card_head'>Level 6</div>
                     <div className='p_card_sub'>{RFData? RFData[5]: "xxx"}</div>
+                    </div>
                 </div>
 
                 <div className='p_card'>
+                  <div className='p_box px-3'>
                     <div className='p_card_head'>Level 7</div>
                     <div className='p_card_sub'>{RFData? RFData[6]: "xxx"}</div>
-
+                    </div>
+                  <div className='p_box px-3'>
                     <div className='p_card_head'>Level 8</div>
                     <div className='p_card_sub'>{RFData? RFData[7]: "xxx"}</div>
-
+                    </div>
+                  <div className='p_box px-3'>
                     <div className='p_card_head'>Level 9</div>
                     <div className='p_card_sub'>{RFData? RFData[8]: "xxx"}</div>
+                    </div>
                 </div>
             </div>
           
         </div>
-
-        {/* <div className='reffer_card'> */}
-            <button className='reffer_btn' onClick={toggleModal}>Get refferal Id </button>
-
-<Modal
-  isOpen={isOpen}
-  onRequestClose={toggleModal}
-  contentLabel="My dialog"
-  className="mymodal"
-  overlayClassName="myoverlay"
-  closeTimeoutMS={500}
->
-  <div className='md_1'>
-    <p>open in polygon browser</p>
-    <a href='http://gcu.vercel.app'>http://gcu.vercel.app</a>
-    <p>referral id:</p></div>
-  <div className='md_5'>{currentAccount}</div>
-  <button onClick={toggleModal} className="md_3">Close X</button>
-</Modal>
-
 <Modal
   isOpen={isOpen1}
   onRequestClose={toggleModal1}

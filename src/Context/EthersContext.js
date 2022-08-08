@@ -9,7 +9,7 @@ export const EthersContext = createContext(null);
 const {ethereum} = window
 export default function Ethers({children}){
    const navigate = useNavigate()
-  const contractAddress = "0x813f996fCe417A68763Bb3387aa28890dCc6893e"
+  const contractAddress = "0x55085c127d23A25906698a5D06117AFB86f68B3A"
   const provider = new ethers.providers.Web3Provider(ethereum)
   const signer = provider.getSigner()
   const contract = new ethers.Contract(contractAddress, abi,signer)
@@ -101,6 +101,31 @@ export default function Ethers({children}){
           const balance = await contract.referenceProfit(account)
           const s2 =  parseInt(balance._hex, 16)
           return s2
+        }catch(e){
+          console.log(e)
+
+        }
+      }
+
+      const getAllrankDetails= async()=>{
+        try{
+          const accounts = await ethereum.request({method: "eth_accounts"})
+          const account  = accounts[0]
+          let rank = await contract.getRank(account)
+           rank =  parseInt(rank._hex, 16)
+           console.log(rank)
+          let toppers = await contract.getCurrentMonthWinners()
+          let arr =[]
+          for(let i=0; i<toppers.length;i++){
+            arr.push({
+              address:toppers[i].userAddress,
+              points: parseInt(toppers[i].referalCount._hex, 16)
+            })
+          }
+          return {
+            winners :arr,
+            myRank: rank
+          }
         }catch(e){
           console.log(e)
 
@@ -319,7 +344,7 @@ export default function Ethers({children}){
 
 
     return(
-        <EthersContext.Provider value={{connectWallet,unitCount,referanceData,getReferanceProfit, currentAccount,changeLimit,limitCount, checkIfWalletIsConnect , checkOwner,checkSignIn, signIn,withDrawMoney,unitBalance,buyToken,enterGame,changeOwner,rBenifit,getTotalSupply,getAdminDetails}}>
+        <EthersContext.Provider value={{connectWallet,unitCount,referanceData,getReferanceProfit, currentAccount,changeLimit,limitCount, checkIfWalletIsConnect , checkOwner,checkSignIn, signIn,withDrawMoney,unitBalance,buyToken,enterGame,changeOwner,rBenifit,getTotalSupply,getAdminDetails,getAllrankDetails}}>
           {children}
         </EthersContext.Provider>
     )

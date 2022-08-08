@@ -1,12 +1,8 @@
 .p_main{
-    width: 400px;
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 130px;
-
+  width: 400px;
+  min-height: 400px;
+  background-color: rgb(221, 221, 221);
+  border: 3px solid black;
 }
 
 .p_head{
@@ -15,35 +11,14 @@
     width: 100%;
     text-align: center;
     font-size: 30px;
-    font-weight: 600;
+    font-weight: 00;
 }
-.Wallet{
-  background-color: rgba(0, 102, 255, 0.518);
-  width: 400px;
-  height: 70px;
-  text-align: center;
-  padding: 10px;
-}
-.wallet_head{
- color: bisque;
- font-weight: 600;
- font-family: 'Arial', sans-serif;
- margin-bottom: 5px;
- font-size: 12px;
-}
-.wallet_address{
-color: aliceblue;
-font-size: 15px;
-}
+
 .p_bottom{
     width: 400px;
-    margin-top: 20px;
-    background-image: linear-gradient( rgb(95, 95, 95),rgb(50, 50, 50));
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding-top: 20px;
     padding-bottom: 20px;
 }
 .p_details{
@@ -52,13 +27,24 @@ font-size: 15px;
   justify-content:space-evenly;
 }
 .sub_head{
-  color:  rgba(214,157,29,255);
-  font-size: 22px;
+  font-size: 18px;
+  font-weight: 600;
 }
+.p_id_main{
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: rgb(247, 221, 182);
+  color: black;
+  display: flex;
+  padding-top: 10px;
+}
+.p_id{
+font-size: 17px;
 
+}
 .sub_sub{
  font-size: 20px;
- color: white;
  margin-bottom: 15px;
  text-align: center;
 }
@@ -76,19 +62,23 @@ font-size: 15px;
    margin-bottom: 10px;
 }
 .p_card{
-   width: 100px;
    text-align: center;
-   background-color: rgba(213,213,213,255);
    padding: 20px;
 }
 
 .p_card_head{
-  color: rgb(18, 159, 143);
+  color: #54c0fd;
   font-size: 17px;
 
 }
+.p_box{
+  border: 2px solid black;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
 .p_card_sub{
-   color: white;
+  color: #238dcd;
 }
 .reffer_card{
     width: 400px;
@@ -102,9 +92,16 @@ font-size: 15px;
     border-radius: 10px;
 }
 
-
-
-
+.copy-img{
+width: 20px;
+height: 20px;
+margin-left: 6px;
+}
+.copy-img:hover{
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.126);
+  padding: 5px;
+  }
 
 /* CSS */
 .button-24 {
@@ -143,49 +140,14 @@ font-size: 15px;
   opacity: .5;
 }
 
-
-
-
-
-
-/* CSS */
 .button-9 {
-  appearance: button;
-  backface-visibility: hidden;
-  background-color: #405cf5;
-  border-radius: 6px;
-  border-width: 0;
-  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
-  font-size: 100%;
-  height: 44px;
-  line-height: 1.15;
-  margin: 12px 0 0;
-  outline: none;
-  overflow: hidden;
-  padding: 0 25px;
-  position: relative;
-  text-align: center;
-  text-transform: none;
-  transform: translateZ(0);
-  transition: all .2s,box-shadow .08s ease-in;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: 100%;
-  
+  background-image: linear-gradient(to bottom, #54c0fd, #45afed, #359ddd, #238dcd, #0b7cbd);
+  color: rgb(255, 255, 255);
+  width: 150px;
+  height: 45px;
+  border-radius: 10px;
 }
 
-.button-9:disabled {
-  cursor: default;
-}
-
-.button-9:focus {
-  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
-}
 
 /* model */
 
