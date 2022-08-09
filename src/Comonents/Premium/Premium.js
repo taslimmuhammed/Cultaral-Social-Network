@@ -7,6 +7,7 @@ import Modal from 'react-modal'
 import Copy from '../../images/copy.png'
 import cup from '../../images/cup.png'
 import bell from '../../images/bell.png'
+import { Messages } from '../../Utils/Messages'
 
 Modal.setAppElement("#root");
 function Premium() {
@@ -119,7 +120,7 @@ useEffect(() => {
          <div className='p_id ml-1' >ID :{CA}</div>
          <img className='copy-img' src={Copy} onClick={() => {navigator.clipboard.writeText(currentAccount)}}></img>
       </div>
-      <img src={bell} className='w-9 h-9' />
+      <img src={bell} className='w-9 h-9'  onClick={toggleModal1}/>
       <img src={cup}  className='w-9 h-8' onClick={()=>navigate('/ranking')}/>
       </div>
       {/* Nav Part End */}
@@ -210,6 +211,43 @@ useEffect(() => {
   <input className='in_2 px-1' onChange={(e)=>{setIn1(e.target.value)}} type="number" placeholder='000'></input>
   <div onClick={handleBuy} className="button-x">Buy Token</div>
   <button onClick={toggleModal1} className="md_3">Close X</button>
+</Modal>
+
+<Modal
+  isOpen={isOpen1}
+  onRequestClose={toggleModal1}
+  contentLabel="My dialog"
+  className="mymodal"
+  overlayClassName="myoverlay"
+  closeTimeoutMS={500}
+>
+  <div className='Notify_main text-white'>
+    <div className='text-white text-lg mb-3 align-center items-center'>Notifications for you:-</div>
+
+    <div className='message w-full'>
+      <div className='message-header flex '>
+      <div className='message_liner mr-1'/>
+      <div className='message_date text-md text-yellow-400'>Old</div>
+      <div className='message_liner ml-1'/>
+      </div>
+    </div>
+
+    {
+      Messages.map((e, index)=>{
+        return(
+      <div className='message w-full'  key={e.id}>
+      <div className='message_date text-s underline '>{e.date}</div>
+      <div className='Message Data mb-3 '>
+       - {e.data}
+      </div>
+    </div>    
+        )
+      })
+    }
+
+  <button onClick={toggleModal1} className="md_3">Close X</button>
+  </div>
+  
 </Modal>
     </div>
 }

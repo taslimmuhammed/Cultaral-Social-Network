@@ -7,15 +7,15 @@ function HomePage() {
   const navigate = useNavigate()
   const {currentAccount, checkIfWalletIsConnect, checkSignIn} = useContext(EthersContext)
   const checker = async() => {
-     const  s1 = await checkIfWalletIsConnect()
-          if(s1===0){
-      navigate("/landing")
-     }else{
+    //  const  s1 = await checkIfWalletIsConnect()
+    //       if(s1===0){
+    //   navigate("/landing")
+    //  }else{
       const s2 =await checkSignIn()
       console.log(s2)
       if(s2===1) navigate('/general')
       if(s2===2) navigate('/premium')
-     }
+    // }
   }
 
   useEffect(() => {

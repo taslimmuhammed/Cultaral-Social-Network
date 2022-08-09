@@ -6,28 +6,38 @@ import { Chinese } from "../Comonents/Languages/Chinese";
 import { Sorter } from "./Sorter";
 import { useNavigate } from "react-router-dom";
 export const EthersContext = createContext(null);
-const {ethereum} = window
+
 export default function Ethers({children}){
-   const navigate = useNavigate()
+  const navigate = useNavigate()
   const contractAddress = "0x55085c127d23A25906698a5D06117AFB86f68B3A"
-  const provider = new ethers.providers.Web3Provider(ethereum)
-  const signer = provider.getSigner()
-  const contract = new ethers.Contract(contractAddress, abi,signer)
+  const [Contract, setContract] = useState()
   const [currentAccount, setCurrentAccount] = useState(null);
   const ShortenAddress = (address) => `${address.slice(0, 5)}...${address.slice(address.length - 4)}`;
 
     const checkIfWalletIsConnect = async () => {
       try {
-        if (!ethereum) return alert("Please install MetaMask.");
-        const accounts = await ethereum.request({ method: "eth_accounts" });
-        if (accounts.length) {
-          setCurrentAccount(accounts[0]); 
-          return 1;
-        } else {
-          alert("No accounts found");
+          if ( window.ethereum == null) {
+          alert("please install metamask")
           navigate('/landing')
-          return 0;
-        }
+            }
+            else{
+              const {ethereum} = window
+              const accounts = await ethereum.request({ method: "eth_accounts" });
+              if (accounts.length) {
+                setCurrentAccount(accounts[0]); 
+                const {ethereum} = window
+                const provider = new ethers.providers.Web3Provider(ethereum)
+                const signer = provider.getSigner()
+                const contract = new ethers.Contract(contractAddress, abi,signer)
+                setContract(contract)
+                return 1;
+              } else {
+                alert("No accounts found");
+                navigate('/landing')
+                return 0;
+              }
+            }
+
       } catch (error) {
         console.log("this is check wallet error",error);
         return 0;
@@ -36,6 +46,7 @@ export default function Ethers({children}){
 
     const connectWallet = async () => {
       try {
+        const {ethereum} = window
         if (!ethereum) return alert("Please install MetaMask.");
         const accounts = await ethereum.request({ method: "eth_requestAccounts", });
         setCurrentAccount(accounts[0]);
@@ -50,25 +61,27 @@ export default function Ethers({children}){
   
   
       const checkOwner = async()=>{
+        const {ethereum} = window
         const accounts = await ethereum.request({method: "eth_accounts"})
         const account  = accounts[0]
-         const ownerAddress = await contract.owner()
+         const ownerAddress = await Contract.owner()
          let x= false;
          if(account.toUpperCase()===ownerAddress.toUpperCase()) x=true
          return x
       }
 
       const checkSignIn = async()=>{
+        const {ethereum} = window
         const accounts = await ethereum.request({method: "eth_accounts"})
         const account  = accounts[0]
-         const s1 = await contract.active(account)
+         const s1 = await Contract.active(account)
          const s2 =  parseInt(s1, 16)
          return s2;
       }
 
       const signIn= async(address, active)=>{
         try{
-          const transfer = await contract.signIn(address, active)
+          const transfer = await Contract.signIn(address, active)
           await transfer.wait()
           alert("Sign In succeful, if your are not redirected , refresh after few minutes")
           navigate('/premium')
@@ -79,11 +92,12 @@ export default function Ethers({children}){
       }
       const getAdminDetails = async()=>{
         try{
-            let totalSupply = await contract.totalSupply()
-            let days =  await contract.getDays()
-            let currentMonth = await contract.currentMonth()
-            let userLimit = await contract.userLimit()
-            let unitLimit = await contract.unitLimit()
+          const {ethereum} = window
+            let totalSupply = await Contract.totalSupply()
+            let days =  await Contract.getDays()
+            let currentMonth = await Contract.currentMonth()
+            let userLimit = await Contract.userLimit()
+            let unitLimit = await Contract.unitLimit()
             let datas = {
               totalSupply : parseInt(totalSupply._hex, 16),
               days : parseInt(days._hex, 16),
@@ -99,9 +113,10 @@ export default function Ethers({children}){
 
       const getReferanceProfit= async()=>{
         try{
+          const {ethereum} = window
           const accounts = await ethereum.request({method: "eth_accounts"})
           const account  = accounts[0]
-          const balance = await contract.referenceProfit(account)
+          const balance = await Contract.referenceProfit(account)
           const s2 =  parseInt(balance._hex, 16)
           return s2
         }catch(e){
@@ -112,12 +127,13 @@ export default function Ethers({children}){
 
       const getAllrankDetails= async()=>{
         try{
+          const {ethereum} = window
           const accounts = await ethereum.request({method: "eth_accounts"})
           const account  = accounts[0]
-          let rank = await contract.getRank(account)
+          let rank = await Contract.getRank(account)
            rank =  parseInt(rank._hex, 16)
-           console.log(rank)
-          let toppers = await contract.getCurrentMonthWinners()
+          let toppers = await Contract.getCurrentMonthWinners()
+          console.log(toppers)
           let arr =[]
           for(let i=0; i<toppers.length;i++){
             arr.push({
@@ -137,22 +153,23 @@ export default function Ethers({children}){
 
       const unitBalance = async()=>{
         try{
+          const {ethereum} = window
           const accounts = await ethereum.request({method: "eth_accounts"})
           const account  = accounts[0]
-          // let balance = await contract.unitBalance(account)
+          // let balance = await Contract.unitBalance(account)
           // let s2 =  parseInt(balance._hex, 16)
          
-          let balance1 = await contract.unitCount(account)
+          let balance1 = await Contract.unitCount(account)
           let s21 =  parseInt(balance1._hex, 16)
           let arr = [s21];
-          const benifit = await contract.benifit(account)
+          const benifit = await Contract.benifit(account)
           const s22 =  parseInt(benifit._hex, 16)
           arr.push(s22)
           
-          const balance3 = await contract.referenceProfit(account)
+          const balance3 = await Contract.referenceProfit(account)
           const s23 =  parseInt(balance3._hex, 16)
           arr.push(s23)
-          const balance4 = await contract.IN(account)
+          const balance4 = await Contract.IN(account)
           const s24 =  parseInt(balance4._hex, 16)
           arr.push(s24)
           // console.log(arr)
@@ -164,9 +181,10 @@ export default function Ethers({children}){
       }
       const rBenifit = async()=>{
         try{
+          const {ethereum} = window
           const accounts = await ethereum.request({method: "eth_accounts"})
           const account  = accounts[0]
-          const balance = await contract.benifit(account)
+          const balance = await Contract.benifit(account)
           const s2 =  parseInt(balance._hex, 16)
           return s2
         }catch(e){
@@ -176,7 +194,7 @@ export default function Ethers({children}){
 
       const getRefaralList = async()=>{
         try{
-          let arr = await contract.getCurrentMonthWinners()
+          let arr = await Contract.getCurrentMonthWinners()
           arr = await Sorter(arr)
           return arr
         }catch(e){
@@ -186,9 +204,10 @@ export default function Ethers({children}){
 
       const unitCount = async()=>{
         try{
+          const {ethereum} = window
           const accounts = await ethereum.request({method: "eth_accounts"})
           const account  = accounts[0]
-          const balance = await contract.unitCount(account)
+          const balance = await Contract.unitCount(account)
           const s2 =  parseInt(balance._hex, 16)
           //console.log("unitcounr",s2)
           return s2
@@ -199,7 +218,7 @@ export default function Ethers({children}){
 
       const limitCount = async()=>{
         try{
-          const balance = await contract.unitLimit()
+          const balance = await Contract.unitLimit()
           const s2 =  parseInt(balance._hex, 16)
           return s2
         }catch(e){
@@ -209,7 +228,7 @@ export default function Ethers({children}){
 
       const getTotalSupply = async()=>{
         try{
-          const balance = await contract.totalSupply()
+          const balance = await Contract.totalSupply()
           const s2 =  parseInt(balance._hex, 16)
           return s2
         }catch(e){
@@ -218,7 +237,7 @@ export default function Ethers({children}){
       }
       const getDaysLeft = async()=>{
         try{
-          const balance = await contract.getDays()
+          const balance = await Contract.getDays()
           let s2 =  parseInt(balance._hex, 16)
           s2 = 30-s2
           return s2
@@ -236,7 +255,7 @@ export default function Ethers({children}){
             value: ethers.utils.parseEther(z)
           }
           console.log("Sending.....")
-          const transfer = await contract.buyUnitToken(amount, overrides)
+          const transfer = await Contract.buyUnitToken(amount, overrides)
           await transfer.wait()
           console.log("transferred")
       }
@@ -245,12 +264,12 @@ export default function Ethers({children}){
 
       
       const enterGame= async()=>{
-          const gameEntry = await contract.enterGame()
+          const gameEntry = await Contract.enterGame()
           await gameEntry.wait()
       }
       const changeOwner= async(address)=>{
         try{
-          await contract.changeOwner(address)
+          await Contract.changeOwner(address)
         }catch(e){
           console.log(e)
           alert(e.data.message)
@@ -258,7 +277,7 @@ export default function Ethers({children}){
       }
       const changeLimit= async(limit)=>{
         try{
-          const chlmt = await contract.changeLimit(limit)
+          const chlmt = await Contract.changeLimit(limit)
           await chlmt.wait()
           alert("Limit changed succefully")
         }catch(e){
@@ -268,7 +287,7 @@ export default function Ethers({children}){
       }
       const changeUserLimit= async(limit)=>{
         try{
-          const chlmt = await contract.changeUserLimit(limit)
+          const chlmt = await Contract.changeUserLimit(limit)
           await chlmt.wait()
           alert("Limit changed succefully")
         }catch(e){
@@ -278,7 +297,7 @@ export default function Ethers({children}){
       }
       const withDrawMoney= async()=>{
         try{
-          const transaction = await contract.withDrawMoney()
+          const transaction = await Contract.withDrawMoney()
           await transaction.wait()
           alert("The cash has been withdrawn succefully")
         }catch(e){
@@ -289,9 +308,10 @@ export default function Ethers({children}){
 
       const referanceData = async()=>{
         try{
+          const {ethereum} = window
           const accounts = await ethereum.request({method: "eth_accounts"})
           const account  = accounts[0]
-          const referals = await contract.myRefferals(account)
+          const referals = await Contract.myRefferals(account)
           let arr=[];
           for(let i=0; i<9;i++){
             const s1 = await referals[i]._hex
@@ -333,18 +353,13 @@ export default function Ethers({children}){
             }
         
       }
-
+const initiaor = async()=>{
+  let x=await checkIfWalletIsConnect();
+  if(x)getN()
+}
     useEffect(() => {
-      checkIfWalletIsConnect();
-      // changeNetwork()
-      getN()
+      initiaor()
     }, []);
-
-    // useEffect(() => {
-    //   if(Lang==true) setLanguage(English)
-    //   else setLanguage(Chinese)
-    // }, [Lang])
-    
 
 
     return(

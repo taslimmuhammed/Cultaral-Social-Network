@@ -13,6 +13,7 @@ import { Messages } from './Utils/Messages';
 import { English } from './Comonents/Languages/English';
 import Ranking from './Comonents/Ranking/Ranking';
 function App() {
+
   const [Notify, setNotify] = useState(true)
   const [isOpen1, setIsOpen1] = useState(false);
   const [Read, setRead] = useState([])
@@ -66,6 +67,7 @@ useEffect(() => {
           <Route path='/premium' exact element={<PremiumPage/>}></Route>
           <Route path='/general' exact element={<GeneralPage/>}></Route>
           <Route path='/admin' exact element={<Admin/>}></Route>   
+          <Route path='/ranking' exact element={<Ranking/>}></Route>  
           <Route path='/ranking' exact element={<Ranking/>}></Route>  
         </Routes>
         </Ethers>
