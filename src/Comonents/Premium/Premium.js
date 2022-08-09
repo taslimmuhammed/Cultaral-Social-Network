@@ -21,6 +21,7 @@ function Premium() {
     const [In1, setIn1] = useState()
     const [Ben, setBen] = useState(0)
     const [CA, setCA] = useState()
+    const [Read, setRead] = useState(false)
    const ShortenAddress = (address) => `${address.slice(0, 5)}...${address.slice(address.length - 4)}`;
 
  const [isOpen, setIsOpen] = useState(false);
@@ -50,7 +51,7 @@ function Premium() {
      const x = await referanceData()
      setRFData(x)
     }
-
+   
     const handleBuy= async()=>{
    if(window.confirm(`Proceed to buy ${In1} units ?`)==true){
 
@@ -83,7 +84,7 @@ function Premium() {
     setisLoading(true)
    try{
       await enterGame()
-      alert("1 UNIT has been used Lot, if you win your unit balance will increase automatically")
+      alert("1 Ticket has been used Lot, if you win your Ticket balance will increase automatically")
       initiaor()
    } catch(e){
    console.log(e)
@@ -140,7 +141,7 @@ useEffect(() => {
             <div className='sub_head'>BENEFITS SHARING</div>
             <div className='sub_sub'>{Ben} Matic | {Ben/2}Units</div>
 
-            <div className='sub_head'>REFERENCE PORFIT</div>
+            <div className='sub_head'>Invite Commission</div>
             <div className='sub_sub'>{ReferalBalance} Matic</div>
               
             <div className='flex w-full justify-evenly' >
@@ -205,7 +206,7 @@ useEffect(() => {
   overlayClassName="myoverlay"
   closeTimeoutMS={500}
 >
-  <div className='md_1'>Enter the amount of tokens (max {10-Bunit1})</div>
+  <div className='md_1'>Enter the amount of tickets (max {10-Bunit1})</div>
   <input className='in_2 px-1' onChange={(e)=>{setIn1(e.target.value)}} type="number" placeholder='000'></input>
   <div onClick={handleBuy} className="button-x">Buy Token</div>
   <button onClick={toggleModal1} className="md_3">Close X</button>

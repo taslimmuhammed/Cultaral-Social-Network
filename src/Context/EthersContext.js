@@ -14,6 +14,8 @@ export default function Ethers({children}){
   const signer = provider.getSigner()
   const contract = new ethers.Contract(contractAddress, abi,signer)
   const [currentAccount, setCurrentAccount] = useState(null);
+  const ShortenAddress = (address) => `${address.slice(0, 5)}...${address.slice(address.length - 4)}`;
+
     const checkIfWalletIsConnect = async () => {
       try {
         if (!ethereum) return alert("Please install MetaMask.");
@@ -23,6 +25,7 @@ export default function Ethers({children}){
           return 1;
         } else {
           alert("No accounts found");
+          navigate('/landing')
           return 0;
         }
       } catch (error) {
@@ -118,7 +121,7 @@ export default function Ethers({children}){
           let arr =[]
           for(let i=0; i<toppers.length;i++){
             arr.push({
-              address:toppers[i].userAddress,
+              address:ShortenAddress(toppers[i].userAddress),
               points: parseInt(toppers[i].referalCount._hex, 16)
             })
           }
@@ -216,7 +219,8 @@ export default function Ethers({children}){
       const getDaysLeft = async()=>{
         try{
           const balance = await contract.getDays()
-          const s2 =  parseInt(balance._hex, 16)
+          let s2 =  parseInt(balance._hex, 16)
+          s2 = 30-s2
           return s2
         }catch(e){
           console.log(e)
@@ -344,7 +348,7 @@ export default function Ethers({children}){
 
 
     return(
-        <EthersContext.Provider value={{connectWallet,unitCount,referanceData,getReferanceProfit, currentAccount,changeLimit,limitCount, checkIfWalletIsConnect , checkOwner,checkSignIn, signIn,withDrawMoney,unitBalance,buyToken,enterGame,changeOwner,rBenifit,getTotalSupply,getAdminDetails,getAllrankDetails}}>
+        <EthersContext.Provider value={{connectWallet,unitCount,referanceData,getReferanceProfit, currentAccount,changeLimit,limitCount, checkIfWalletIsConnect , checkOwner,checkSignIn, signIn,withDrawMoney,unitBalance,buyToken,enterGame,changeOwner,rBenifit,getTotalSupply,getAdminDetails,getAllrankDetails, getDaysLeft}}>
           {children}
         </EthersContext.Provider>
     )

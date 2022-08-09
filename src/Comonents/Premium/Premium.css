@@ -213,3 +213,13 @@ color: #ccc;
   margin-top: 30px;
  border-radius: 5px;
 }
+.img-bell-h{
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.top-right {
+  position: absolute;
+  top: 30px;
+  right: 120px;
+}
