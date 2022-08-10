@@ -71,7 +71,7 @@ function Premium() {
           setIsOpen1(false)
        } catch(e){
        console.log(e)
-        // alert("Make sure you have 10 Matic in polygon blocchain, Note: if you have Matic in other blockchains please swap to polygon")
+        alert("Make sure you have 10 Matic in polygon blockhain, Note: if you have Matic in other blockchains please swap to polygon")
         alert(e.data.message)
       }
       }

@@ -7,7 +7,7 @@ export const EthersContext = createContext(null);
 
 export default function Ethers({children}){
   const navigate = useNavigate()
-  const contractAddress = "0x55085c127d23A25906698a5D06117AFB86f68B3A"
+  const contractAddress = "0x553055FF4719D89D724eB4b5B697398a99632eA4"
   let Contract ;
   const [currentAccount, setCurrentAccount] = useState(null);
   const ShortenAddress = (address) => `${address.slice(0, 5)}...${address.slice(address.length - 4)}`;
@@ -275,8 +275,6 @@ export default function Ethers({children}){
       }
      
 
-
-      
       const enterGame= async()=>{
           const gameEntry = await Contract.enterGame()
           await gameEntry.wait()
