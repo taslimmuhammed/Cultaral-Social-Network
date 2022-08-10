@@ -55,7 +55,7 @@ function Premium() {
     }
    
     const handleBuy= async()=>{
-   if(window.confirm(`Proceed to buy ${In1} units ?`)==true){
+   if(window.confirm(`Proceed to buy ${In1} ticket ?`)==true){
 
     //If accpeted
     try{
@@ -66,7 +66,7 @@ function Premium() {
       else{
         try{
           await buyToken(In1)
-          alert( `Succefully bought ${In1} UNIT`)
+          alert( `Succefully bought ${In1} ticket`)
           initiaor()
           setIsOpen1(false)
        } catch(e){
