@@ -37,13 +37,16 @@ function Home() {
           <div className='h_head flex justify-between items-center px-4'>
          <div className='title1'>CSN</div>
          <div>
-         <button className="button-82-pushable mb-2" role="button">
+          <a href="https://ipfs.io/ipfs/bafybeicqg5odcvtdnc2xmycfgxy6egrigh7ppzdxbunjznbyji6opsrbla" target="_blank">
+          <button className="button-82-pushable mb-2" role="button">
       <span className="button-82-shadow"></span>
   <span className="button-82-edge"></span>
   <span className="button-82-front text">
     Read Me
   </span>
 </button>
+          </a>
+         
          </div>
 
           </div>

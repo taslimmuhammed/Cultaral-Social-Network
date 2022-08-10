@@ -6,22 +6,24 @@ import './Admin.css'
 function Admin() {
     const navigate = useNavigate()
     const [isLoading, setisLoading] = useState(false)
-    const { checkOwner, changeOwner, changeLimit, getAdminDetails,withDrawMoney } = useContext(EthersContext)
+    const { checkOwner, changeOwner, changeLimit, getAdminDetails,withDrawMoney,FInitiator } = useContext(EthersContext)
     const [Address, setAddress] = useState()
     const [Limit, setLimit] = useState()
     const [Data, setData] = useState()
     const initiator = async () => {
         setisLoading(true)
         try {
-            const v = await checkOwner()
-            if (v != true) {
-                alert("Not Authorized")
-                navigate('/')
-            }else{
+            await FInitiator()
+            //const v = await checkOwner()
+            // if (v != true) {
+            //     alert("Not Authorized")
+            //     navigate('/')
+            //     console.log("Hello")
+            // }else{
                 const datas = await getAdminDetails()
                 console.log(datas)
                 setData(datas)
-            }
+            //}
 
         } catch (e) {
             console.log(e)
@@ -58,7 +60,6 @@ function Admin() {
         else {
             alert("withdrawal cancelled")
         }
-
     }
 
     useEffect(() => {

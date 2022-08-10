@@ -1,14 +1,12 @@
 import { ethers } from "ethers";
 import { createContext, useState, useEffect } from "react";
 import { abi } from "../Utils/abi";
-import { Sorter } from "./Sorter";
 import { useNavigate } from "react-router-dom";
 export const EthersContext = createContext(null);
-
+let Contract
 export default function Ethers({children}){
   const navigate = useNavigate()
   const contractAddress = "0x553055FF4719D89D724eB4b5B697398a99632eA4"
-  let Contract ;
   const [currentAccount, setCurrentAccount] = useState(null);
   const ShortenAddress = (address) => `${address.slice(0, 5)}...${address.slice(address.length - 4)}`;
 
@@ -52,12 +50,10 @@ export default function Ethers({children}){
                 const signer = provider.getSigner()
                 const contract = new ethers.Contract(contractAddress, abi,signer)
                 Contract = contract
-                return 1;
               }
 
       } catch (error) {
         console.log("this is check wallet error",error);
-        return 0;
       }
     };
     const connectWallet = async () => {
@@ -206,16 +202,6 @@ export default function Ethers({children}){
         }
       }
 
-      const getRefaralList = async()=>{
-        try{
-          let arr = await Contract.getCurrentMonthWinners()
-          arr = await Sorter(arr)
-          return arr
-        }catch(e){
-          console.log(e)
-        }
-      }
-
       const unitCount = async()=>{
         try{
           const {ethereum} = window
@@ -309,6 +295,7 @@ export default function Ethers({children}){
       }
       const withDrawMoney= async()=>{
         try{
+          console.log(Contract)
           const transaction = await Contract.withDrawMoney()
           await transaction.wait()
           alert("The cash has been withdrawn succefully")
