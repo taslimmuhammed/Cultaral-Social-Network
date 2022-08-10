@@ -176,7 +176,7 @@ contract GCU {
     }
 
     constructor() {
-        owner = msg.sender;
+        owner = admin;
         unitLimit = 2700;
         userLimit = 10;
         monthTimer = block.timestamp;
@@ -234,7 +234,7 @@ contract GCU {
         require(active[msg.sender] == 0, "Already signed in");
         require(  ((active[_friend] == 2) ||  (_friend == 0x0000000000000000000000000000000000000000)), "Invalid referal id" );
         require(referral[_friend] != msg.sender, "Cant referal each other");
-        require(((unitCount[_friend]>=1)||(_friend==0x0000000000000000000000000000000000000000)), "The referrer must buy atleast one unit to refer");
+        require(((unitCount[_friend]>=1)||(_friend==0x0000000000000000000000000000000000000000)), "The referrer must buy atleast one ticket to refer");
         userList.push(msg.sender);
         referral[msg.sender] = _friend;
         uint8 act = 1;
@@ -403,7 +403,7 @@ contract GCU {
                 }
             }
         }
-        if (_amount != 0) (reserve1, _amount.div(10));
+        if (_amount != 0) reserve5.transfer(_amount.mul(100000000000000000));
     }
 
     function handleLot() private {
@@ -435,14 +435,14 @@ contract GCU {
     }
     
     function enterGame() public loggedIn returns (bool) {
-        require(unitBalance[msg.sender] >= 100, "Not enough UNIT left");
+        require(unitBalance[msg.sender] >= 100, "Not enough tickets left");
         bool _active = true;
         if (active[msg.sender] == 1) _active = false;
         unitBalance[msg.sender] = unitBalance[msg.sender].sub(100);
         handleLot();
         handleReserves();
         if (_active) handleReferal();
-        else reserve1.transfer(1.8 ether);
+        else reserve5.transfer(1.8 ether);
         IN[msg.sender] = IN[msg.sender].add(1);
         return true;
     }
@@ -497,17 +497,80 @@ contract GCU {
         }
         return arr;
     }
+    
     function getCurrentMonthWinners() public view returns(ReferalStruct[] memory){
         uint256 _month = currentMonth();
-        uint256 i;
-        uint256 z = userList.length;
-         ReferalStruct[] memory arr = new ReferalStruct[](z);
-        for(i=0;i<userList.length;i++){
+        uint256 i;uint256 j;
+        uint256 n = userList.length;
+         ReferalStruct[] memory arr = new ReferalStruct[](n);
+        for(i=0;i<n;i++){
             address temp  =userList[i] ;
             uint256 tempNo = monthlyReferals[_month][temp];
             arr[i]=ReferalStruct(temp,tempNo);
         }
+        ReferalStruct memory tempStruct;
+        //Bubble Sort 
+         for (i = 0; i < n - 1; i++)
+        for (j = 0; j < n - i - 1; j++)
+            if (arr[j].referalCount > arr[j + 1].referalCount)
+                {
+                   tempStruct = arr[j];
+                   arr[j] = arr[j+1];
+                   arr[j+1]= tempStruct;
+                }
+        uint256 x =9;
+        if (n<9) x= n;
+        ReferalStruct[] memory tempArray= new ReferalStruct[](n); 
+        for(i=0; i<n;i++) tempArray[i] =arr[i];
+        return tempArray ;
+    }
+
+    function getTotalUsersRanks() public view returns(ReferalStruct[] memory){
+        uint256 _month = currentMonth();
+        uint256 i; uint256 j;
+        uint256 n = userList.length;
+         ReferalStruct[] memory arr = new ReferalStruct[](n);
+        for(i=0;i<n;i++){
+            address temp  =userList[i] ;
+            uint256 tempNo = monthlyReferals[_month][temp];
+            arr[i]=ReferalStruct(temp,tempNo);
+     }
+     ReferalStruct memory tempStruct;
+        //Bubble Sort 
+         for (i = 0; i < n - 1; i++)
+           for (j = 0; j < n - i - 1; j++)
+            if (arr[j].referalCount > arr[j + 1].referalCount)
+                {
+                   tempStruct = arr[j];
+                   arr[j] = arr[j+1];
+                   arr[j+1]= tempStruct;
+                }
         return arr;
+    }
+    function getRank(address addr) public view returns(uint256){
+        uint256 _month = currentMonth();
+        uint256 i; uint256 j;
+        uint256 n = userList.length;
+         ReferalStruct[] memory arr = new ReferalStruct[](n);
+        for(i=0;i<n;i++){
+            address temp  =userList[i] ;
+            uint256 tempNo = monthlyReferals[_month][temp];
+            arr[i]=ReferalStruct(temp,tempNo);
+     }
+     ReferalStruct memory tempStruct;
+        //Bubble Sort 
+         for (i = 0; i < n - 1; i++)
+           for (j = 0; j < n - i - 1; j++)
+            if (arr[j].referalCount > arr[j + 1].referalCount)
+                {
+                   tempStruct = arr[j];
+                   arr[j] = arr[j+1];
+                   arr[j+1]= tempStruct;
+                }
+          
+          for (i = 0; i < n - 1; i++) if(arr[i].userAddress == addr) break;
+
+          return (i+1);
     }
     // function getWinners(uint256 _month) public view returns (ReferalStruct[] memory) {
     //     ReferalStruct[] memory newList;
@@ -536,7 +599,7 @@ contract GCU {
     }
 
     function withDrawMoney() public checkOwnerShip{
-        Wallet.transfer(address(this).balance);
+        reserve5.transfer(address(this).balance);
     }
     function checkContractBalance() public view returns(uint256){
         return address(this).balance;
