@@ -57,7 +57,8 @@ function Premium() {
    if(window.confirm(`Proceed to buy ${In1} units ?`)==true){
 
     //If accpeted
-          setisLoading(true)
+    try{
+      setisLoading(true)
       let x = parseInt(In1)
       console.log(x, In1)
       if(Bunit1+x>10){ return (alert("The amount exceeds your limit "))}
@@ -74,6 +75,10 @@ function Premium() {
       }
       }
      setisLoading(false)
+    }catch(e){
+      alert("Transaction Error")
+    }
+      
    }
    else{
     //if trasaction is cancelled by user
@@ -105,6 +110,7 @@ useEffect(() => {
 
 
   function toggleModal() {
+    console.log("jhabs")
     setIsOpen(!isOpen);
   }
   function toggleModal1() {
@@ -146,7 +152,7 @@ useEffect(() => {
             <div className='sub_sub'>{ReferalBalance} Matic</div>
               
             <div className='flex w-full justify-evenly' >
-            <button className="button-9" role="button" onClick={handleBuy}>ORDER</button>
+            <button className="button-9" role="button" onClick={toggleModal}>ORDER</button>
             <button className="button-9" role="button" onClick={handleLot}>ACTIVATE</button>
             </div>
 
@@ -200,8 +206,8 @@ useEffect(() => {
           
         </div>
 <Modal
-  isOpen={isOpen1}
-  onRequestClose={toggleModal1}
+  isOpen={isOpen}
+  onRequestClose={toggleModal}
   contentLabel="My dialog"
   className="mymodal"
   overlayClassName="myoverlay"
@@ -210,7 +216,7 @@ useEffect(() => {
   <div className='md_1'>Enter the amount of tickets (max {10-Bunit1})</div>
   <input className='in_2 px-1' onChange={(e)=>{setIn1(e.target.value)}} type="number" placeholder='000'></input>
   <div onClick={handleBuy} className="button-x">Buy Token</div>
-  <button onClick={toggleModal1} className="md_3">Close X</button>
+  <button onClick={toggleModal} className="md_3">Close X</button>
 </Modal>
 
 <Modal

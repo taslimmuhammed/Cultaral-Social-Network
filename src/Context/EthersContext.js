@@ -8,7 +8,7 @@ export const EthersContext = createContext(null);
 export default function Ethers({children}){
   const navigate = useNavigate()
   const contractAddress = "0x55085c127d23A25906698a5D06117AFB86f68B3A"
-  const [Contract, setContract] = useState()
+  let Contract ;
   const [currentAccount, setCurrentAccount] = useState(null);
   const ShortenAddress = (address) => `${address.slice(0, 5)}...${address.slice(address.length - 4)}`;
 
@@ -27,7 +27,7 @@ export default function Ethers({children}){
                 const provider = new ethers.providers.Web3Provider(ethereum)
                 const signer = provider.getSigner()
                 const contract = new ethers.Contract(contractAddress, abi,signer)
-                setContract(contract)
+                Contract = contract
                 return 1;
               } else {
                 alert("No accounts found");
@@ -307,6 +307,7 @@ export default function Ethers({children}){
           const {ethereum} = window
           const accounts = await ethereum.request({method: "eth_accounts"})
           const account  = accounts[0]
+          console.log(Contract)
           const referals = await Contract.myRefferals(account)
           let arr=[];
           for(let i=0; i<9;i++){
