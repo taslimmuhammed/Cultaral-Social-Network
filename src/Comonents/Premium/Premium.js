@@ -203,8 +203,9 @@ useEffect(() => {
                     <div className='p_card_sub'>{RFData? RFData[8]: "xxx"}</div>
                     </div>
                 </div>
+                
             </div>
-          
+            <a href="https://ipfs.io/ipfs/bafybeicqg5odcvtdnc2xmycfgxy6egrigh7ppzdxbunjznbyji6opsrbla" target="_blank" className='a-1'><div className='read_me'>Read Me</div></a>
         </div>
 <Modal
   isOpen={isOpen}
