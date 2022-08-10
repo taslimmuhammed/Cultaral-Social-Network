@@ -6,9 +6,9 @@ import { EthersContext } from '../../Context/EthersContext'
 import Modal from 'react-modal'
 import Copy from '../../images/copy.png'
 import cup from '../../images/cup.png'
-import bell from '../../images/bell.png'
 import { Messages } from '../../Utils/Messages'
-import Reference from '../Referance/Reference'
+import Reference from '../Premium-Utils/Reference'
+import Notifications from '../Premium-Utils/Notifications'
 
 Modal.setAppElement("#root");
 function Premium() {
@@ -27,7 +27,6 @@ function Premium() {
   const ShortenAddress = (address) => `${address.slice(0, 5)}...${address.slice(address.length - 4)}`;
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isOpen1, setIsOpen1] = useState(false);
   const initiaor = async () => {
     await FInitiator()
     setisLoading(true)
@@ -62,7 +61,7 @@ function Premium() {
           try {
             await buyToken(In1)
             initiaor()
-            setIsOpen1(false)
+            setIsOpen(false)
           } catch (e) {
             console.log(e)
             alert("Make sure you have 10 Matic in polygon blockhain, Note: if you have Matic in other blockchains please swap to polygon")
@@ -102,9 +101,7 @@ function Premium() {
     console.log("jhabs")
     setIsOpen(!isOpen);
   }
-  function toggleModal1() {
-    setIsOpen1(!isOpen1);
-  }
+
 
   return isLoading ? <Loader /> :
     <div className='p_main'>
@@ -115,7 +112,7 @@ function Premium() {
           <div className='p_id ml-1' >ID :{CA}</div>
           <img className='copy-img' src={Copy} onClick={() => { navigator.clipboard.writeText(currentAccount) }}></img>
         </div>
-        <img src={bell} className='w-9 h-9' onClick={toggleModal1} />
+        <Notifications/>
         <img src={cup} className='w-9 h-8' onClick={() => navigate('/ranking')} />
       </div>
       {/* Nav Part End */}
@@ -162,42 +159,6 @@ function Premium() {
         <button onClick={toggleModal} className="md_3">Close X</button>
       </Modal>
 
-      <Modal
-        isOpen={isOpen1}
-        onRequestClose={toggleModal1}
-        contentLabel="My dialog"
-        className="mymodal"
-        overlayClassName="myoverlay"
-        closeTimeoutMS={500}
-      >
-        <div className='Notify_main text-white'>
-          <div className='text-white text-lg mb-3 align-center items-center'>Notifications for you:-</div>
-
-          <div className='message w-full'>
-            <div className='message-header flex '>
-              <div className='message_liner mr-1' />
-              <div className='message_date text-md text-yellow-400'>Old</div>
-              <div className='message_liner ml-1' />
-            </div>
-          </div>
-
-          {
-            Messages.map((e, index) => {
-              return (
-                <div className='message w-full' key={e.id}>
-                  <div className='message_date text-s underline '>{e.date}</div>
-                  <div className='Message Data mb-3 '>
-                    - {e.data}
-                  </div>
-                </div>
-              )
-            })
-          }
-
-          <button onClick={toggleModal1} className="md_3">Close X</button>
-        </div>
-
-      </Modal>
     </div>
 }
 

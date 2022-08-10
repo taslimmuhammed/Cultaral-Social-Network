@@ -14,51 +14,8 @@ import { English } from './Comonents/Languages/English';
 import Ranking from './Comonents/Ranking/Ranking';
 function App() {
 
-  const [Notify, setNotify] = useState(true)
-  const [isOpen1, setIsOpen1] = useState(false);
-  const [Read, setRead] = useState([])
-  const [UnRead, setUnRead] = useState([])
-  // localStorage.removeItem('n1');
-  let read = localStorage.getItem("n2")
-  read = parseInt(read)
-  let arrRead  = []
-  let arrNotRead = []
-  const readCheck = ()=>{
-
-    if(read!=null){ 
-     for (let i =0; i<Messages.length; i++){
-      if(Messages[i].id<=read) arrRead.push(Messages[i])
-      else arrNotRead.push(Messages[i])
-     }
-    }
-     else{ arrNotRead = Messages}
-     setRead(arrRead)
-     setUnRead(arrNotRead)
-  
-  }
-
-  function CloseModal() {
-    arrNotRead=[]
-    arrRead = Messages
-    setRead(arrRead)
-    setUnRead(arrNotRead)
-    setIsOpen1(!isOpen1);
-  }
-  const openNotifications = async()=>{
-    setIsOpen1(!isOpen1);
-    localStorage.setItem("n2",Messages[Messages.length-1].id)
-
-  }
-useEffect(() => {
-  readCheck()
-}, [])
-
   return (
     <div className="main-screen">
-     {/* <div className='flex justify-between x1' >
-      <div className='' onClick={()=>{alert("Hang tight, global ranking will be available soon, Buy More units to get exciting rewards")}}><img src={trophy} className="trophy"></img></div>
-     <div className='' onClick={openNotifications}><img src={Notify?"https://www.pngall.com/wp-content/uploads/11/Youtube-Bell-Icon-Notification-Yellow-Button-PNG.png":"https://icones.pro/wp-content/uploads/2022/02/icone-de-cloche-grise.png"} className="bell"/></div>
-     </div> */}
       <Router>
         <Ethers>
         <Routes>
@@ -73,64 +30,6 @@ useEffect(() => {
         </Ethers>
       </Router>
       {/* <div className='l_Bottom margin'>&#169;Global Community Union</div>   */}
-      <Modal
-  isOpen={isOpen1}
-  onRequestClose={CloseModal}
-  contentLabel="My dialog"
-  className="mymodal"
-  overlayClassName="myoverlay"
-  closeTimeoutMS={500}
->
-  <div className='Notify_main text-white'>
-    <div className='text-white text-lg mb-3 align-center items-center'>Notifications for you:-</div>
-
-
-    <div className='message w-full'>
-      <div className='message-header flex '>
-      <div className='message_liner mr-1'/>
-      <div className='message_date text-md text-yellow-400'>New</div>
-      <div className='message_liner ml-1'/>
-      </div>
-    </div>
-    {
-      UnRead.map((e)=>{
-        return(
-      <div className='message w-full' key={e.id}>
-      <div className='message_date text-s underline '>{e.date}</div>
-      <div className='Message Data mb-3 '>
-       - {English[e.data]}
-      </div>
-    </div>    
-        )
-      })
-    }
-    
-
-    <div className='message w-full'>
-      <div className='message-header flex '>
-      <div className='message_liner mr-1'/>
-      <div className='message_date text-md text-yellow-400'>Old</div>
-      <div className='message_liner ml-1'/>
-      </div>
-    </div>
-
-    {
-      Read.map((e, index)=>{
-        return(
-      <div className='message w-full'  key={e.id}>
-      <div className='message_date text-s underline '>{e.date}</div>
-      <div className='Message Data mb-3 '>
-       - {English[e.data]}
-      </div>
-    </div>    
-        )
-      })
-    }
-
-  <button onClick={CloseModal} className="md_3">Close X</button>
-  </div>
-  
-</Modal>
     </div>
   );
 }
