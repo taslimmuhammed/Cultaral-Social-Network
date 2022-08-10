@@ -148,7 +148,8 @@ export default function Ethers({children}){
           for(let i=0; i<toppers.length;i++){
             arr.push({
               address:ShortenAddress(toppers[i].userAddress),
-              points: parseInt(toppers[i].referalCount._hex, 16)
+              points: parseInt(toppers[i].referalCount._hex, 16),
+              fullAddress: toppers[i].userAddress
             })
           }
           return {
