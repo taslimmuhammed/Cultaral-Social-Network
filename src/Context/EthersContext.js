@@ -42,6 +42,24 @@ export default function Ethers({children}){
       }
     };
 
+    const FInitiator = async () => {
+      try {
+          if ( window.ethereum == null) {
+            }
+            else{
+                const {ethereum} = window
+                const provider = new ethers.providers.Web3Provider(ethereum)
+                const signer = provider.getSigner()
+                const contract = new ethers.Contract(contractAddress, abi,signer)
+                Contract = contract
+                return 1;
+              }
+
+      } catch (error) {
+        console.log("this is check wallet error",error);
+        return 0;
+      }
+    };
     const connectWallet = async () => {
       try {
         const {ethereum} = window
@@ -360,7 +378,7 @@ const initiaor = async()=>{
 
 
     return(
-        <EthersContext.Provider value={{connectWallet,unitCount,referanceData,getReferanceProfit, currentAccount,changeLimit,limitCount, checkIfWalletIsConnect , checkOwner,checkSignIn, signIn,withDrawMoney,unitBalance,buyToken,enterGame,changeOwner,rBenifit,getTotalSupply,getAdminDetails,getAllrankDetails, getDaysLeft}}>
+        <EthersContext.Provider value={{connectWallet,unitCount,referanceData,getReferanceProfit, currentAccount,changeLimit,limitCount, FInitiator , checkOwner,checkSignIn, signIn,withDrawMoney,unitBalance,buyToken,enterGame,changeOwner,rBenifit,getTotalSupply,getAdminDetails,getAllrankDetails, getDaysLeft}}>
           {children}
         </EthersContext.Provider>
     )

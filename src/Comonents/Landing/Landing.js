@@ -5,8 +5,9 @@ import { EthersContext } from '../../Context/EthersContext'
 
 function Landing() {
   const navigate = useNavigate()
-  const {connectWallet,currentAccount} = useContext(EthersContext)
+  const {connectWallet,currentAccount,FInitiator} = useContext(EthersContext)
   const checker = async () => {
+    await FInitiator()
     if(currentAccount!=null){
       console.log("navigating from lading page")
      navigate("/")

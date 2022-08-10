@@ -12,7 +12,7 @@ import { Messages } from '../../Utils/Messages'
 Modal.setAppElement("#root");
 function Premium() {
     const navigate = useNavigate()
-    const {checkSignIn,unitBalance,buyToken,enterGame, currentAccount,referanceData} = useContext(EthersContext)
+    const {checkSignIn,unitBalance,buyToken,enterGame, currentAccount,referanceData,FInitiator} = useContext(EthersContext)
     const [Units, setUnits] = useState(0)
     const [BUnits, setBUnits] = useState(0)
     const [Bunit1, setBunit1] = useState(0)
@@ -28,6 +28,7 @@ function Premium() {
  const [isOpen, setIsOpen] = useState(false);
  const [isOpen1, setIsOpen1] = useState(false);
     const initiaor= async()=>{
+      await FInitiator()
         setisLoading(true)
         try{
             const s1 = await checkSignIn()
