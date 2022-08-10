@@ -216,7 +216,7 @@ useEffect(() => {
 >
   <div className='md_1'>Enter the amount of tickets (max {10-Bunit1})</div>
   <input className='in_2 px-1' onChange={(e)=>{setIn1(e.target.value)}} type="number" placeholder='000'></input>
-  <div onClick={handleBuy} className="button-x">Buy Token</div>
+  <div onClick={handleBuy} className="button-x">Buy Ticket</div>
   <button onClick={toggleModal} className="md_3">Close X</button>
 </Modal>
 
