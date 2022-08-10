@@ -6,11 +6,12 @@ import './Ranking.css'
 function Ranking() {
     const [isLoading, setisLoading] = useState(false)
     const navigate = useNavigate()
-    const {getAllrankDetails, getDaysLeft} = useContext(EthersContext)
+    const {getAllrankDetails, getDaysLeft,FInitiator} = useContext(EthersContext)
     const [Data, setData] = useState()
     const [Days, setDays] = useState(0)
    const initiator = async()=>{
     setisLoading(true)
+     await FInitiator()
     let data = await getAllrankDetails()
     let days = await getDaysLeft()
     setDays(days)
