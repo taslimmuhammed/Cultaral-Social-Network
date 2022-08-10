@@ -146,7 +146,7 @@ useEffect(() => {
             <div className='sub_sub'>{ReferalBalance} Matic</div>
               
             <div className='flex w-full justify-evenly' >
-            <button className="button-9" role="button" onClick={toggleModal1}>ORDER</button>
+            <button className="button-9" role="button" onClick={handleBuy}>ORDER</button>
             <button className="button-9" role="button" onClick={handleLot}>ACTIVATE</button>
             </div>
 

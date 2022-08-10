@@ -1,8 +1,6 @@
 import { ethers } from "ethers";
 import { createContext, useState, useEffect } from "react";
 import { abi } from "../Utils/abi";
-import { English } from "../Comonents/Languages/English";
-import { Chinese } from "../Comonents/Languages/Chinese";
 import { Sorter } from "./Sorter";
 import { useNavigate } from "react-router-dom";
 export const EthersContext = createContext(null);
@@ -58,8 +56,6 @@ export default function Ethers({children}){
       }
     };
 
-  
-  
       const checkOwner = async()=>{
         const {ethereum} = window
         const accounts = await ethereum.request({method: "eth_accounts"})
