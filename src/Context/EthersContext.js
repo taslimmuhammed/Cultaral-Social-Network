@@ -248,6 +248,7 @@ export default function Ethers({children}){
       }
 
       const buyToken= async(x)=>{
+        try{
           let y = parseInt(x) 
           let z = y*10
           z = z+""
@@ -259,12 +260,18 @@ export default function Ethers({children}){
           const transfer = await Contract.buyUnitToken(amount, overrides)
           await transfer.wait()
           console.log("transferred")
+          alert(`Succefully bought ${x} ticket`)
+        }catch(e){
+          alert("Transaction Error")
+        }
+          
       }
      
 
       const enterGame= async()=>{
           const gameEntry = await Contract.enterGame()
           await gameEntry.wait()
+          alert("1 Ticket has been used Lot, if you win your Ticket balance will increase automatically")
       }
       const changeOwner= async(address)=>{
         try{

@@ -231,7 +231,7 @@ color: #ccc;
   text-decoration: none
 }
 .read_me:hover{
-  padding: 8px;
+  background-image: linear-gradient(to bottom, #02fffb,#0b4384);
 }
 .a-1{
   text-decoration: none
