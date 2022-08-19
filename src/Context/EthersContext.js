@@ -6,7 +6,7 @@ export const EthersContext = createContext(null);
 let Contract
 export default function Ethers({children}){
   const navigate = useNavigate()
-  const contractAddress = "0xc97Ed0CBD26142831E991d9D335a69141BF4fe84"
+  const contractAddress = "0xB1D8323754Cb5798d4991814e91072058f539C4c"
   const [currentAccount, setCurrentAccount] = useState(null);
   const ShortenAddress = (address) => `${address.slice(0, 5)}...${address.slice(address.length - 4)}`;
 
@@ -321,7 +321,7 @@ export default function Ethers({children}){
           console.log(Contract)
           const referals = await Contract.myRefferals(account)
           let arr=[];
-          for(let i=0; i<9;i++){
+          for(let i=0; i<6;i++){
             const s1 = await referals[i]._hex
             const s2 =  parseInt(s1, 16)
             arr.push(s2)

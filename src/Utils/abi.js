@@ -24,6 +24,99 @@ export const abi =[
 		"type": "event"
 	},
 	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "newUser",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "referrer",
+				"type": "address"
+			}
+		],
+		"name": "SignedIn",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "winner",
+				"type": "address"
+			}
+		],
+		"name": "Win",
+		"type": "event"
+	},
+	{
+		"stateMutability": "nonpayable",
+		"type": "fallback"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "IN",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "active",
+		"outputs": [
+			{
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "benifit",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -77,124 +170,6 @@ export const abi =[
 	},
 	{
 		"inputs": [],
-		"name": "enterGame",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "newUser",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "referrer",
-				"type": "address"
-			}
-		],
-		"name": "SignedIn",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_friend",
-				"type": "address"
-			},
-			{
-				"internalType": "bool",
-				"name": "_active",
-				"type": "bool"
-			}
-		],
-		"name": "signIn",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "winner",
-				"type": "address"
-			}
-		],
-		"name": "Win",
-		"type": "event"
-	},
-	{
-		"stateMutability": "nonpayable",
-		"type": "fallback"
-	},
-	{
-		"inputs": [],
-		"name": "withDrawMoney",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "active",
-		"outputs": [
-			{
-				"internalType": "uint8",
-				"name": "",
-				"type": "uint8"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "benifit",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
 		"name": "checkContractBalance",
 		"outputs": [
 			{
@@ -241,6 +216,19 @@ export const abi =[
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "enterGame",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -321,21 +309,6 @@ export const abi =[
 					{
 						"internalType": "uint256",
 						"name": "lvl6",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "lvl7",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "lvl8",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "lvl9",
 						"type": "uint256"
 					}
 				],
@@ -436,14 +409,8 @@ export const abi =[
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "IN",
+		"inputs": [],
+		"name": "monthTimer",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -468,19 +435,6 @@ export const abi =[
 			}
 		],
 		"name": "monthlyReferals",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "monthTimer",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -529,21 +483,6 @@ export const abi =[
 			{
 				"internalType": "uint256",
 				"name": "lvl6",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "lvl7",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "lvl8",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "lvl9",
 				"type": "uint256"
 			}
 		],
@@ -602,6 +541,30 @@ export const abi =[
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_friend",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "_active",
+				"type": "bool"
+			}
+		],
+		"name": "signIn",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "totalSupply",
 		"outputs": [
@@ -612,6 +575,24 @@ export const abi =[
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "tokenAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "reciever",
+				"type": "address"
+			}
+		],
+		"name": "transaferTokens",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -695,6 +676,19 @@ export const abi =[
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "addr",
+				"type": "address"
+			}
+		],
+		"name": "withDrawMoney",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]

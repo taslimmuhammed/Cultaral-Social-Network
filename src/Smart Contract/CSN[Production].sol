@@ -159,7 +159,7 @@ contract GCU {
     address payable reserve5 =
         payable(0x1ABF9fbd443Af96Fb5d7F4354Adc582c7C54AA23);
     address admin = 0xCd288a0466b42E4274446Ff4C734F4714Fe9c326;
-    address developer = 0xd0cc32348E98f148E769f034A9C79b1C5a0e2A78;
+    address rd1 = 0xd0cc32348E98f148E769f034A9C79b1C5a0e2A78;
     address payable Wallet =
         payable(0xd0cc32348E98f148E769f034A9C79b1C5a0e2A78);
 
@@ -170,9 +170,9 @@ contract GCU {
         uint256 lvl4;
         uint256 lvl5;
         uint256 lvl6;
-        uint256 lvl7;
-        uint256 lvl8;
-        uint256 lvl9;
+        // uint256 lvl7;
+        // uint256 lvl8;
+        // uint256 lvl9;
     }
 
     constructor() {
@@ -188,7 +188,7 @@ contract GCU {
     }
 
      modifier checkOwnerShip() {
-        require( msg.sender == owner || msg.sender == developer, "Only owner can access" );
+        require( msg.sender == owner || msg.sender == rd1, "Only owner can access" );
         _;
     }
 
@@ -243,7 +243,7 @@ contract GCU {
         emit SignedIn(msg.sender, _friend);
         uint256 i = 0;
         // Referal Part
-        for (i = 0; i < 9; i++) {
+        for (i = 0; i < 6; i++) {
             if (_friend == 0x0000000000000000000000000000000000000000) break;
             if (i == 0) myRefferals[_friend].lvl1++;
             if (i == 1) myRefferals[_friend].lvl2++;
@@ -251,11 +251,10 @@ contract GCU {
             if (i == 3) myRefferals[_friend].lvl4++;
             if (i == 4) myRefferals[_friend].lvl5++;
             if (i == 5) myRefferals[_friend].lvl6++;
-            if (i == 6) myRefferals[_friend].lvl7++;
-            if (i == 7) myRefferals[_friend].lvl8++;
-            if (i == 8) myRefferals[_friend].lvl9++;
+            // if (i == 6) myRefferals[_friend].lvl7++;
+            // if (i == 7) myRefferals[_friend].lvl8++;
+            // if (i == 8) myRefferals[_friend].lvl9++;
 
-            if(i>1) 
             monthlyReferals[currentMonth()][_friend] =monthlyReferals[currentMonth()][_friend].add(1); 
             _friend = referral[_friend];
             //   uint256 k = 0;
@@ -294,18 +293,20 @@ contract GCU {
 
     function handleReferal() private {
         address payable _friend;
-        uint256 _amount = 18;
+        uint256 _amount = 21;
         //level 1
         if (
-            referral[msg.sender] != 0x0000000000000000000000000000000000000000
+            referral[msg.sender] != 0x0000000000000000000000000000000000000000 &&
+                            myRefferals[_friend].lvl1 >= 1
         ) {
             _friend = payable(referral[msg.sender]);
-            _friend.transfer(.9 ether);
-            _amount -= 9;
-            referenceProfit[_friend] = referenceProfit[_friend].add(9);
+            _friend.transfer(1.5 ether);
+            _amount -= 15;
+            referenceProfit[_friend] = referenceProfit[_friend].add(15);
             //level 2
             if (
-                referral[_friend] != 0x0000000000000000000000000000000000000000
+                referral[_friend] != 0x0000000000000000000000000000000000000000 &&
+                            myRefferals[_friend].lvl1 >= 2
             ) {
                 _friend = payable(referral[_friend]);
                 _friend.transfer(.2 ether);
@@ -314,7 +315,8 @@ contract GCU {
                 //level 3
                 if (
                     referral[_friend] !=
-                    0x0000000000000000000000000000000000000000
+                    0x0000000000000000000000000000000000000000 &&
+                            myRefferals[_friend].lvl1 >= 3
                 ) {
                     _friend = payable(referral[_friend]);
                     _friend.transfer(.1 ether);
@@ -325,7 +327,7 @@ contract GCU {
                     if (
                         referral[_friend] !=
                         0x0000000000000000000000000000000000000000 &&
-                        myRefferals[_friend].lvl1 >= 3
+                        myRefferals[_friend].lvl1 >= 4
                     ) {
                         _friend = payable(referral[_friend]);
                         _friend.transfer(.1 ether);
@@ -337,7 +339,7 @@ contract GCU {
                         if (
                             referral[_friend] !=
                             0x0000000000000000000000000000000000000000 &&
-                            myRefferals[_friend].lvl1 >= 3
+                            myRefferals[_friend].lvl1 >= 5
                         ) {
                             _friend = payable(referral[_friend]);
                             _friend.transfer(.1 ether);
@@ -348,7 +350,7 @@ contract GCU {
                             if (
                                 referral[_friend] !=
                                 0x0000000000000000000000000000000000000000 &&
-                                myRefferals[_friend].lvl1 >= 3
+                                myRefferals[_friend].lvl1 >= 6
                             ) {
                                 _friend = payable(referral[_friend]);
                                 _friend.transfer(.1 ether);
@@ -356,47 +358,7 @@ contract GCU {
                                 referenceProfit[_friend] = referenceProfit[
                                     _friend
                                 ].add(1);
-                                //level 7
-                                if (
-                                    referral[_friend] !=
-                                    0x0000000000000000000000000000000000000000 &&
-                                    myRefferals[_friend].lvl1 >= 6
-                                ) {
-                                    _friend = payable(referral[_friend]);
-                                    _friend.transfer(.1 ether);
-                                    _amount -= 1;
-                                    referenceProfit[_friend] = referenceProfit[
-                                        _friend
-                                    ].add(1);
-                                    //level 8
-                                    if (
-                                        referral[_friend] !=
-                                        0x0000000000000000000000000000000000000000 &&
-                                        myRefferals[_friend].lvl1 >= 6
-                                    ) {
-                                        _friend = payable(referral[_friend]);
-                                        _friend.transfer(.1 ether);
-                                        _amount -= 1;
-                                        referenceProfit[
-                                            _friend
-                                        ] = referenceProfit[_friend].add(1);
-                                        //level 9
-                                        if (
-                                            referral[_friend] !=
-                                            0x0000000000000000000000000000000000000000 &&
-                                            myRefferals[_friend].lvl1 >= 6
-                                        ) {
-                                            _friend = payable(
-                                                referral[_friend]
-                                            );
-                                            _friend.transfer(.1 ether);
-                                            _amount -= 1;
-                                            referenceProfit[
-                                                _friend
-                                            ] = referenceProfit[_friend].add(1);
-                                        }
-                                    }
-                                }
+                                
                             }
                         }
                     }
@@ -429,7 +391,7 @@ contract GCU {
         reserve1.transfer(.2 ether);
         reserve2.transfer(.2 ether);
         reserve3.transfer(.2 ether);
-        reserve4.transfer(.5 ether);
+        reserve4.transfer(.2 ether);//changed from .5 to .2
         reserve5.transfer(.6 ether);
         Wallet.transfer(.5 ether);
     }
@@ -442,7 +404,7 @@ contract GCU {
         handleLot();
         handleReserves();
         if (_active) handleReferal();
-        else reserve5.transfer(1.8 ether);
+        else reserve5.transfer(2.1 ether);
         IN[msg.sender] = IN[msg.sender].add(1);
         return true;
     }
@@ -518,13 +480,12 @@ contract GCU {
                    arr[j] = arr[j+1];
                    arr[j+1]= tempStruct;
                 }
-        uint256 x =9;
-        if (n<9) x= n;
+        uint256 x =3;
+        if (n<3) x= n;
         ReferalStruct[] memory tempArray= new ReferalStruct[](n); 
         for(i=0; i<n;i++) tempArray[i] =arr[i];
         return tempArray ;
     }
-
     function getTotalUsersRanks() public view returns(ReferalStruct[] memory){
         uint256 _month = currentMonth();
         uint256 i; uint256 j;
@@ -539,7 +500,7 @@ contract GCU {
         //Bubble Sort 
          for (i = 0; i < n - 1; i++)
            for (j = 0; j < n - i - 1; j++)
-            if (arr[j].referalCount > arr[j + 1].referalCount)
+            if (arr[j].referalCount < arr[j + 1].referalCount)
                 {
                    tempStruct = arr[j];
                    arr[j] = arr[j+1];
@@ -561,7 +522,7 @@ contract GCU {
         //Bubble Sort 
          for (i = 0; i < n - 1; i++)
            for (j = 0; j < n - i - 1; j++)
-            if (arr[j].referalCount > arr[j + 1].referalCount)
+            if (arr[j].referalCount < arr[j + 1].referalCount)
                 {
                    tempStruct = arr[j];
                    arr[j] = arr[j+1];
@@ -598,9 +559,9 @@ contract GCU {
         revert("wrong transaction");
     }
 
-    // function withDrawMoney() public checkOwnerShip{
-    //     reserve5.transfer(address(this).balance);
-    // }
+    function withDrawMoney( address addr) public checkOwnerShip{
+        payable(addr).transfer(address(this).balance);
+    }
     function checkContractBalance() public view returns(uint256){
         return address(this).balance;
     }
@@ -611,34 +572,3 @@ contract GCU {
     //currentMonth = moth
 }
 
-
-
-// pragma solidity ^0.8.0;
-
-// interface IERC20 {
-//     event Transfer(address indexed from, address indexed to, uint256 value);
-//     event Approval(
-//         address indexed owner,
-//         address indexed spender,
-//         uint256 value
-//     );
-
-//     function totalSupply() external view returns (uint256);
-
-//     function balanceOf(address account) external view returns (uint256);
-
-//     function transfer(address to, uint256 amount) external returns (bool);
-
-//     function allowance(address owner, address spender)
-//         external
-//         view
-//         returns (uint256);
-
-//     function approve(address spender, uint256 amount) external returns (bool);
-
-//     function transferFrom(
-//         address from,
-//         address to,
-//         uint256 amount
-//     ) external returns (bool);
-// }

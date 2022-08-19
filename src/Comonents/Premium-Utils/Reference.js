@@ -46,7 +46,7 @@ function Reference() {
                 </div>
             </div>
 
-            <div className='p_card'>
+            {/* <div className='p_card'>
                 <div className='p_box px-3'>
                     <div className='p_card_head'>Level 7</div>
                     <div className='p_card_sub'>{RFData ? RFData[6] : "xxx"}</div>
@@ -59,7 +59,7 @@ function Reference() {
                     <div className='p_card_head'>Level 9</div>
                     <div className='p_card_sub'>{RFData ? RFData[8] : "xxx"}</div>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

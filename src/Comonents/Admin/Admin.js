@@ -96,7 +96,7 @@ function Admin() {
                 <div>Change Unit max limit</div>
                 <input placeholder="new Limit" className='text-black' onChange={(e) => { setLimit(e.target.value) }} type="number"></input>
                 <button  className="button-24 mt-1" role="button" onClick={changeLimit1}>Change Limit</button>
-                
+                {/* <button  className="button-24 mt-1" role="button" onClick={withDr}>Change Limit</button> */}
             </div>
         </div>}
     </div>

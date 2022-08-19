@@ -31,7 +31,7 @@ function Ranking() {
 
         <div className='h_head flex justify-between items-center px-4'>
          <div className='title1'>CSN</div>
-         <div className='title2'> Top 9 ranks</div>
+         <div className='title2'> Top 3 ranks</div>
         </div>
          {/* End of navbar */}
         {
@@ -60,7 +60,7 @@ function Ranking() {
                 <img className='copy-img' src={Copy} onClick={() => {navigator.clipboard.writeText(Data.winners[2].fullAddress)}}></img>
                 </div> : "0x000...0000"}</div>
             </div>
-            <div className='r-table-sub'>
+            {/* <div className='r-table-sub'>
                 <div  className='ranks'>Master</div>
                 <div className='addresses'>{Data.winners[3] ? <div className='flex w-full justify-center'>{Data.winners[3].address} 
                 <img className='copy-img' src={Copy} onClick={() => {navigator.clipboard.writeText(Data.winners[3].fullAddress)}}></img>
@@ -95,7 +95,7 @@ function Ranking() {
                 <div className='addresses'>{Data.winners[8] ? <div className='flex w-full justify-center'>{Data.winners[8].address} 
                 <img className='copy-img' src={Copy} onClick={() => {navigator.clipboard.writeText(Data.winners[8].fullAddress)}}></img>
                 </div> : "0x000...0000"}</div>
-            </div>
+            </div> */}
             <div className='flex justify-between w-full mt-2 px-4'>
                 <div>*your rank is - {Data.myRank}</div>
                 <div>*Days Left - {Days}</div>

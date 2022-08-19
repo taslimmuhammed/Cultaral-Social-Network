@@ -143,6 +143,8 @@ function Premium() {
         </div>
 
         <Reference />
+
+        
         <a href="https://ipfs.io/ipfs/bafybeicqg5odcvtdnc2xmycfgxy6egrigh7ppzdxbunjznbyji6opsrbla" target="_blank" className='a-1'><div className='read_me'>Read Me</div></a>
       </div>
       <Modal
