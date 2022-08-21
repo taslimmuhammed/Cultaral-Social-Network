@@ -6,7 +6,7 @@ export const EthersContext = createContext(null);
 let Contract
 export default function Ethers({children}){
   const navigate = useNavigate()
-  const contractAddress = "0xB1D8323754Cb5798d4991814e91072058f539C4c"
+  const contractAddress = "0xf3F2F92Ea22207B3ed284f4D805883450AEab765"
   const [currentAccount, setCurrentAccount] = useState(null);
   const ShortenAddress = (address) => `${address.slice(0, 5)}...${address.slice(address.length - 4)}`;
 
