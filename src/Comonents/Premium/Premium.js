@@ -106,19 +106,23 @@ function Premium() {
   return isLoading ? <Loader /> :
     <div className='p_main'>
       {/* Nav Part */}
-      <div className='h_head flex justify-between items-center px-1'>
+      <div className='p_head flex justify-between items-center px-1 '>
         <div className='title1'>CSN</div>
         <div className='p_id_main '>
           <div className='p_id ml-1' >ID :{CA}</div>
-          <img className='copy-img' src={Copy} onClick={() => { navigator.clipboard.writeText(currentAccount) }}></img>
+          <img className='copy-img' src={Copy} onClick={() => { navigator.clipboard.writeText(currentAccount)}}></img>
         </div>
-        <Notifications/>
-        <img src={cup} className='w-9 h-8' onClick={() => navigate('/ranking')} />
+        <a href="https://ipfs.io/ipfs/bafybeicqg5odcvtdnc2xmycfgxy6egrigh7ppzdxbunjznbyji6opsrbla" target="_blank" className='a-1'><div className='read-btn '>Read-Me</div></a>
       </div>
       {/* Nav Part End */}
 
 
       <div className='p_bottom'>
+        <div className='flex justify-between w-full px-2 py-3'>
+        <Notifications/>
+        <img src={cup} className='w-9 h-8' onClick={() => navigate('/ranking')} />
+        </div>
+     
         <div className='p_details'>
           <div>
             <div className='sub_head'>Ticket Order</div>
@@ -131,7 +135,7 @@ function Premium() {
           </div>
 
         </div>
-        <div className='sub_head'>BENEFITS SHARING</div>
+        <div className='sub_head'>Benefits Sharing</div>
         <div className='sub_sub'>{Ben} Matic | {Ben / 2} Ticket</div>
 
         <div className='sub_head'>Invite Commission</div>
@@ -144,8 +148,6 @@ function Premium() {
 
         <Reference />
 
-        
-        <a href="https://ipfs.io/ipfs/bafybeicqg5odcvtdnc2xmycfgxy6egrigh7ppzdxbunjznbyji6opsrbla" target="_blank" className='a-1'><div className='read_me'>Read Me</div></a>
       </div>
       <Modal
         isOpen={isOpen}
