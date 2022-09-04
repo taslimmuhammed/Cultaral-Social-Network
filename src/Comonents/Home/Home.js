@@ -5,7 +5,6 @@ import {EthersContext} from '../../Context/EthersContext'
 import Loader from '../Loading/Loading'
 function Home() {
 
-  // const [Selected, setSelected] = useState(true)
   const [refferalId, setrefferalId] = useState()
   const [isLoading, setisLoading] = useState(false)
   const [x, setx] = useState()

@@ -295,64 +295,69 @@ contract GCU {
         address payable _friend;
         uint256 _amount = 21;
         //level 1
+        _friend = payable(referral[msg.sender]);
         if (
             referral[msg.sender] != 0x0000000000000000000000000000000000000000 &&
                             myRefferals[_friend].lvl1 >= 1
         ) {
-            _friend = payable(referral[msg.sender]);
+            
             _friend.transfer(1.5 ether);
             _amount -= 15;
             referenceProfit[_friend] = referenceProfit[_friend].add(15);
+        }
             //level 2
+            _friend = payable(referral[_friend]);
             if (
                 referral[_friend] != 0x0000000000000000000000000000000000000000 &&
                             myRefferals[_friend].lvl1 >= 2
             ) {
-                _friend = payable(referral[_friend]);
                 _friend.transfer(.2 ether);
                 _amount -= 2;
                 referenceProfit[_friend] = referenceProfit[_friend].add(2);
+            }
                 //level 3
+                _friend = payable(referral[_friend]);
                 if (
                     referral[_friend] !=
                     0x0000000000000000000000000000000000000000 &&
                             myRefferals[_friend].lvl1 >= 3
                 ) {
-                    _friend = payable(referral[_friend]);
                     _friend.transfer(.1 ether);
                     _amount -= 1;
                     referenceProfit[_friend] = referenceProfit[_friend].add(1);
-
+                }
                     //level 4
+                     _friend = payable(referral[_friend]);
                     if (
                         referral[_friend] !=
                         0x0000000000000000000000000000000000000000 &&
                         myRefferals[_friend].lvl1 >= 4
                     ) {
-                        _friend = payable(referral[_friend]);
                         _friend.transfer(.1 ether);
                         _amount -= 1;
                         referenceProfit[_friend] = referenceProfit[_friend].add(
                             1
                         );
                         //level 5
+                       _friend = payable(referral[_friend]);
                         if (
                             referral[_friend] !=
                             0x0000000000000000000000000000000000000000 &&
                             myRefferals[_friend].lvl1 >= 5
                         ) {
-                            _friend = payable(referral[_friend]);
                             _friend.transfer(.1 ether);
                             _amount -= 1;
                             referenceProfit[_friend] = referenceProfit[_friend]
                                 .add(1);
+                        }
                             ////level 6
+                            _friend = payable(referral[_friend]);
                             if (
                                 referral[_friend] !=
                                 0x0000000000000000000000000000000000000000 &&
                                 myRefferals[_friend].lvl1 >= 6
                             ) {
-                                _friend = payable(referral[_friend]);
+                                
                                 _friend.transfer(.1 ether);
                                 _amount -= 1;
                                 referenceProfit[_friend] = referenceProfit[
@@ -360,10 +365,6 @@ contract GCU {
                                 ].add(1);
                                 
                             }
-                        }
-                    }
-                }
-            }
         }
         if (_amount != 0) reserve5.transfer(_amount.mul(100000000000000000));
     }
