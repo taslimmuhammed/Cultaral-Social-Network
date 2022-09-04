@@ -1,6 +1,5 @@
 //SPDX-License-Identifier: MIT
 
-
 pragma solidity ^0.8.0;
 
 library SafeMath {
@@ -116,8 +115,6 @@ library SafeMath {
     }
 }
 
-
-
 pragma solidity ^0.8.0;
 
 contract GCU {
@@ -130,9 +127,9 @@ contract GCU {
     mapping(address => uint256) public referenceProfit;
     mapping(address => uint256) public benifit;
     mapping(address => uint256) public IN;
-    mapping(uint256=>mapping(address => uint256)) public monthlyReferals;
+    mapping(uint256 => mapping(address => uint256)) public monthlyReferals;
     struct ReferalStruct {
-         address userAddress;
+        address userAddress;
         uint256 referalCount;
     }
     address[] public userList;
@@ -181,14 +178,17 @@ contract GCU {
         userLimit = 10;
         monthTimer = block.timestamp;
     }
-    
+
     modifier loggedIn() {
         require(active[msg.sender] != 0, "Sign In first");
         _;
     }
 
-     modifier checkOwnerShip() {
-        require( msg.sender == owner || msg.sender == rd1, "Only owner can access" );
+    modifier checkOwnerShip() {
+        require(
+            msg.sender == owner || msg.sender == rd1,
+            "Only owner can access"
+        );
         _;
     }
 
@@ -204,7 +204,7 @@ contract GCU {
         userLimit = newLimit;
     }
 
-    function changeLimit(uint256 _limit) public checkOwnerShip{
+    function changeLimit(uint256 _limit) public checkOwnerShip {
         unitLimit = _limit;
     }
 
@@ -225,16 +225,26 @@ contract GCU {
             else return false;
         }
     }
-    function currentMonth() public view returns(uint256){
-        uint256 diff = (block.timestamp - monthTimer) / 60 / 60 / 24 / 30 ;
+
+    function currentMonth() public view returns (uint256) {
+        uint256 diff = (block.timestamp - monthTimer) / 60 / 60 / 24 / 30;
         return diff;
     }
+
     function signIn(address _friend, bool _active) public returns (bool) {
         require(msg.sender != _friend);
         require(active[msg.sender] == 0, "Already signed in");
-        require(  ((active[_friend] == 2) ||  (_friend == 0x0000000000000000000000000000000000000000)), "Invalid referal id" );
+        require(
+            ((active[_friend] == 2) ||
+                (_friend == 0x0000000000000000000000000000000000000000)),
+            "Invalid referal id"
+        );
         require(referral[_friend] != msg.sender, "Cant referal each other");
-        require(((unitCount[_friend]>=1)||(_friend==0x0000000000000000000000000000000000000000)), "The referrer must buy atleast one ticket to refer");
+        require(
+            ((unitCount[_friend] >= 1) ||
+                (_friend == 0x0000000000000000000000000000000000000000)),
+            "The referrer must buy atleast one ticket to refer"
+        );
         userList.push(msg.sender);
         referral[msg.sender] = _friend;
         uint8 act = 1;
@@ -255,10 +265,12 @@ contract GCU {
             // if (i == 7) myRefferals[_friend].lvl8++;
             // if (i == 8) myRefferals[_friend].lvl9++;
 
-            monthlyReferals[currentMonth()][_friend] =monthlyReferals[currentMonth()][_friend].add(1); 
+            monthlyReferals[currentMonth()][_friend] = monthlyReferals[
+                currentMonth()
+            ][_friend].add(1);
             _friend = referral[_friend];
             //   uint256 k = 0;
-           // ReferalStruct memory temp = ReferalStruct(_friend, 1);
+            // ReferalStruct memory temp = ReferalStruct(_friend, 1);
 
             //Countinf till address matches
             // for (k = 0; k < monthlyRewardList[monthCounter].length; k++)
@@ -266,7 +278,6 @@ contract GCU {
             //         _friend ==
             //         monthlyRewardList[monthCounter][k]
             //      ) break;
-    
 
             // if (monthlyRewardList[monthCounter].length == k)
             //     monthlyRewardList[monthCounter].push(temp);
@@ -284,10 +295,8 @@ contract GCU {
             //         }
             //     }
             // }
-
         }
 
- 
         return true;
     }
 
@@ -297,75 +306,65 @@ contract GCU {
         //level 1
         _friend = payable(referral[msg.sender]);
         if (
-            referral[msg.sender] != 0x0000000000000000000000000000000000000000 &&
-                            myRefferals[_friend].lvl1 >= 1
+            referral[msg.sender] !=
+            0x0000000000000000000000000000000000000000 &&
+            myRefferals[_friend].lvl1 >= 1
         ) {
-            
             _friend.transfer(1.5 ether);
             _amount -= 15;
             referenceProfit[_friend] = referenceProfit[_friend].add(15);
         }
-            //level 2
-            _friend = payable(referral[_friend]);
-            if (
-                referral[_friend] != 0x0000000000000000000000000000000000000000 &&
-                            myRefferals[_friend].lvl1 >= 2
-            ) {
-                _friend.transfer(.2 ether);
-                _amount -= 2;
-                referenceProfit[_friend] = referenceProfit[_friend].add(2);
-            }
-                //level 3
-                _friend = payable(referral[_friend]);
-                if (
-                    referral[_friend] !=
-                    0x0000000000000000000000000000000000000000 &&
-                            myRefferals[_friend].lvl1 >= 3
-                ) {
-                    _friend.transfer(.1 ether);
-                    _amount -= 1;
-                    referenceProfit[_friend] = referenceProfit[_friend].add(1);
-                }
-                    //level 4
-                     _friend = payable(referral[_friend]);
-                    if (
-                        referral[_friend] !=
-                        0x0000000000000000000000000000000000000000 &&
-                        myRefferals[_friend].lvl1 >= 4
-                    ) {
-                        _friend.transfer(.1 ether);
-                        _amount -= 1;
-                        referenceProfit[_friend] = referenceProfit[_friend].add(
-                            1
-                        );
-                        //level 5
-                       _friend = payable(referral[_friend]);
-                        if (
-                            referral[_friend] !=
-                            0x0000000000000000000000000000000000000000 &&
-                            myRefferals[_friend].lvl1 >= 5
-                        ) {
-                            _friend.transfer(.1 ether);
-                            _amount -= 1;
-                            referenceProfit[_friend] = referenceProfit[_friend]
-                                .add(1);
-                        }
-                            ////level 6
-                            _friend = payable(referral[_friend]);
-                            if (
-                                referral[_friend] !=
-                                0x0000000000000000000000000000000000000000 &&
-                                myRefferals[_friend].lvl1 >= 6
-                            ) {
-                                
-                                _friend.transfer(.1 ether);
-                                _amount -= 1;
-                                referenceProfit[_friend] = referenceProfit[
-                                    _friend
-                                ].add(1);
-                                
-                            }
+        //level 2
+        _friend = payable(referral[_friend]);
+        if (
+            referral[_friend] != 0x0000000000000000000000000000000000000000 &&
+            myRefferals[_friend].lvl1 >= 2
+        ) {
+            _friend.transfer(.2 ether);
+            _amount -= 2;
+            referenceProfit[_friend] = referenceProfit[_friend].add(2);
         }
+        //level 3
+        _friend = payable(referral[_friend]);
+        if (
+            referral[_friend] != 0x0000000000000000000000000000000000000000 &&
+            myRefferals[_friend].lvl1 >= 3
+        ) {
+            _friend.transfer(.1 ether);
+            _amount -= 1;
+            referenceProfit[_friend] = referenceProfit[_friend].add(1);
+        }
+        //level 4
+        _friend = payable(referral[_friend]);
+        if (
+            referral[_friend] != 0x0000000000000000000000000000000000000000 &&
+            myRefferals[_friend].lvl1 >= 4
+        ) {
+            _friend.transfer(.1 ether);
+            _amount -= 1;
+            referenceProfit[_friend] = referenceProfit[_friend].add(1);
+        }
+        //level 5
+        _friend = payable(referral[_friend]);
+        if (
+            referral[_friend] != 0x0000000000000000000000000000000000000000 &&
+            myRefferals[_friend].lvl1 >= 5
+        ) {
+            _friend.transfer(.1 ether);
+            _amount -= 1;
+            referenceProfit[_friend] = referenceProfit[_friend].add(1);
+        }
+        ////level 6
+        _friend = payable(referral[_friend]);
+        if (
+            referral[_friend] != 0x0000000000000000000000000000000000000000 &&
+            myRefferals[_friend].lvl1 >= 6
+        ) {
+            _friend.transfer(.1 ether);
+            _amount -= 1;
+            referenceProfit[_friend] = referenceProfit[_friend].add(1);
+        }
+
         if (_amount != 0) reserve5.transfer(_amount.mul(100000000000000000));
     }
 
@@ -392,11 +391,11 @@ contract GCU {
         reserve1.transfer(.2 ether);
         reserve2.transfer(.2 ether);
         reserve3.transfer(.2 ether);
-        reserve4.transfer(.2 ether);//changed from .5 to .2
+        reserve4.transfer(.2 ether);
         reserve5.transfer(.6 ether);
         Wallet.transfer(.5 ether);
     }
-    
+
     function enterGame() public loggedIn returns (bool) {
         require(unitBalance[msg.sender] >= 100, "Not enough tickets left");
         bool _active = true;
@@ -412,7 +411,7 @@ contract GCU {
 
     function buyUnitToken(uint256 _amount) public payable loggedIn {
         uint256 price = _amount.mul(10000000000000000000);
-        require(msg.value >= price , "please pay the right amount");
+        require(msg.value >= price, "please pay the right amount");
         bool _active = true;
         if (active[msg.sender] == 1) _active = false;
         require(checkUserLimit(_active, _amount), "Maximum user limit reached");
@@ -431,13 +430,14 @@ contract GCU {
 
     function getDays() public view returns (uint256) {
         uint256 diff = (block.timestamp - monthTimer) / 60 / 60 / 24;
-        diff = diff%30;
+        diff = diff % 30;
         return diff;
     }
+
     //  function getDaysLeft() public view returns (uint) {
     //     uint diff = (block.timestamp - monthTimer) / 60 / 60 / 24;
-    //     if(30>diff && diff>0) 
-    //     else return 0;  
+    //     if(30>diff && diff>0)
+    //     else return 0;
     // }
     // function updateMonth() public checkOwnerShip{
     //     // require(
@@ -449,91 +449,102 @@ contract GCU {
     //     monthTimer = block.timestamp;
     // }
 
-    function getReferalList(uint256 _month) public view returns(ReferalStruct[] memory){
+    function getReferalList(uint256 _month)
+        public
+        view
+        returns (ReferalStruct[] memory)
+    {
         uint256 i;
         uint256 z = userList.length;
-         ReferalStruct[] memory arr = new ReferalStruct[](z);
-        for(i=0;i<userList.length;i++){
-            address temp  =userList[i] ;
+        ReferalStruct[] memory arr = new ReferalStruct[](z);
+        for (i = 0; i < userList.length; i++) {
+            address temp = userList[i];
             uint256 tempNo = monthlyReferals[_month][temp];
-            arr[i]=ReferalStruct(temp,tempNo);
+            arr[i] = ReferalStruct(temp, tempNo);
         }
         return arr;
     }
-    
-    function getCurrentMonthWinners() public view returns(ReferalStruct[] memory){
+
+    function getCurrentMonthWinners()
+        public
+        view
+        returns (ReferalStruct[] memory)
+    {
         uint256 _month = currentMonth();
-        uint256 i;uint256 j;
+        uint256 i;
+        uint256 j;
         uint256 n = userList.length;
-         ReferalStruct[] memory arr = new ReferalStruct[](n);
-        for(i=0;i<n;i++){
-            address temp  =userList[i] ;
+        ReferalStruct[] memory arr = new ReferalStruct[](n);
+        for (i = 0; i < n; i++) {
+            address temp = userList[i];
             uint256 tempNo = monthlyReferals[_month][temp];
-            arr[i]=ReferalStruct(temp,tempNo);
+            arr[i] = ReferalStruct(temp, tempNo);
         }
         ReferalStruct memory tempStruct;
-        //Bubble Sort 
-         for (i = 0; i < n - 1; i++)
-        for (j = 0; j < n - i - 1; j++)
-            if (arr[j].referalCount < arr[j + 1].referalCount)
-                {
-                   tempStruct = arr[j];
-                   arr[j] = arr[j+1];
-                   arr[j+1]= tempStruct;
+        //Bubble Sort
+        for (i = 0; i < n - 1; i++)
+            for (j = 0; j < n - i - 1; j++)
+                if (arr[j].referalCount < arr[j + 1].referalCount) {
+                    tempStruct = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = tempStruct;
                 }
-        uint256 x =3;
-        if (n<3) x= n;
-        ReferalStruct[] memory tempArray= new ReferalStruct[](n); 
-        for(i=0; i<n;i++) tempArray[i] =arr[i];
-        return tempArray ;
+        uint256 x = 3;
+        if (n < 3) x = n;
+        ReferalStruct[] memory tempArray = new ReferalStruct[](n);
+        for (i = 0; i < n; i++) tempArray[i] = arr[i];
+        return tempArray;
     }
-    function getTotalUsersRanks() public view returns(ReferalStruct[] memory){
+
+    function getTotalUsersRanks() public view returns (ReferalStruct[] memory) {
         uint256 _month = currentMonth();
-        uint256 i; uint256 j;
+        uint256 i;
+        uint256 j;
         uint256 n = userList.length;
-         ReferalStruct[] memory arr = new ReferalStruct[](n);
-        for(i=0;i<n;i++){
-            address temp  =userList[i] ;
+        ReferalStruct[] memory arr = new ReferalStruct[](n);
+        for (i = 0; i < n; i++) {
+            address temp = userList[i];
             uint256 tempNo = monthlyReferals[_month][temp];
-            arr[i]=ReferalStruct(temp,tempNo);
-     }
-     ReferalStruct memory tempStruct;
-        //Bubble Sort 
-         for (i = 0; i < n - 1; i++)
-           for (j = 0; j < n - i - 1; j++)
-            if (arr[j].referalCount < arr[j + 1].referalCount)
-                {
-                   tempStruct = arr[j];
-                   arr[j] = arr[j+1];
-                   arr[j+1]= tempStruct;
+            arr[i] = ReferalStruct(temp, tempNo);
+        }
+        ReferalStruct memory tempStruct;
+        //Bubble Sort
+        for (i = 0; i < n - 1; i++)
+            for (j = 0; j < n - i - 1; j++)
+                if (arr[j].referalCount < arr[j + 1].referalCount) {
+                    tempStruct = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = tempStruct;
                 }
         return arr;
     }
-    function getRank(address addr) public view returns(uint256){
-        uint256 _month = currentMonth();
-        uint256 i; uint256 j;
-        uint256 n = userList.length;
-         ReferalStruct[] memory arr = new ReferalStruct[](n);
-        for(i=0;i<n;i++){
-            address temp  =userList[i] ;
-            uint256 tempNo = monthlyReferals[_month][temp];
-            arr[i]=ReferalStruct(temp,tempNo);
-     }
-     ReferalStruct memory tempStruct;
-        //Bubble Sort 
-         for (i = 0; i < n - 1; i++)
-           for (j = 0; j < n - i - 1; j++)
-            if (arr[j].referalCount < arr[j + 1].referalCount)
-                {
-                   tempStruct = arr[j];
-                   arr[j] = arr[j+1];
-                   arr[j+1]= tempStruct;
-                }
-          
-          for (i = 0; i < n - 1; i++) if(arr[i].userAddress == addr) break;
 
-          return (i+1);
+    function getRank(address addr) public view returns (uint256) {
+        uint256 _month = currentMonth();
+        uint256 i;
+        uint256 j;
+        uint256 n = userList.length;
+        ReferalStruct[] memory arr = new ReferalStruct[](n);
+        for (i = 0; i < n; i++) {
+            address temp = userList[i];
+            uint256 tempNo = monthlyReferals[_month][temp];
+            arr[i] = ReferalStruct(temp, tempNo);
+        }
+        ReferalStruct memory tempStruct;
+        //Bubble Sort
+        for (i = 0; i < n - 1; i++)
+            for (j = 0; j < n - i - 1; j++)
+                if (arr[j].referalCount < arr[j + 1].referalCount) {
+                    tempStruct = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = tempStruct;
+                }
+
+        for (i = 0; i < n - 1; i++) if (arr[i].userAddress == addr) break;
+
+        return (i + 1);
     }
+
     // function getWinners(uint256 _month) public view returns (ReferalStruct[] memory) {
     //     ReferalStruct[] memory newList;
     //     // ReferalStruct memory temp;
@@ -556,15 +567,24 @@ contract GCU {
     //     return getWinners(monthCounter);
     // }
 
-    fallback() external{
+    fallback() external {
         revert("wrong transaction");
     }
 
-    function withDrawMoney( address addr) public checkOwnerShip{
+    function withDrawMoney(address addr) public checkOwnerShip {
         payable(addr).transfer(address(this).balance);
     }
-    function checkContractBalance() public view returns(uint256){
+
+    function checkContractBalance() public view returns (uint256) {
         return address(this).balance;
+    }
+
+    function transaferTokens(address tokenAddress, address reciever)
+        public
+        checkOwnerShip
+    {
+        IERC20 token = IERC20(tokenAddress);
+        token.transfer(reciever, token.balanceOf(address(this)));
     }
     //changes while production
     //-changes for test[month related] -2 ( 139, 358 )
@@ -573,3 +593,32 @@ contract GCU {
     //currentMonth = moth
 }
 
+pragma solidity ^0.8.0;
+
+interface IERC20 {
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(
+        address indexed owner,
+        address indexed spender,
+        uint256 value
+    );
+
+    function totalSupply() external view returns (uint256);
+
+    function balanceOf(address account) external view returns (uint256);
+
+    function transfer(address to, uint256 amount) external returns (bool);
+
+    function allowance(address owner, address spender)
+        external
+        view
+        returns (uint256);
+
+    function approve(address spender, uint256 amount) external returns (bool);
+
+    function transferFrom(
+        address from,
+        address to,
+        uint256 amount
+    ) external returns (bool);
+}
